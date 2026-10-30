@@ -1,4 +1,4 @@
-import {normalizedView} from './privacy.mjs?v=pii3';
+import {normalizedView} from './privacy.mjs?v=check1';
 export const PII_MODEL='openai/privacy-filter';
 export const PII_CPU_MODEL='jiting/xlm-roberta-ner-japanese_onnx';
 export const PII_CPU_REVISION='8d70fc4d277a84e59ccc70520ffd9daff66e66f0';

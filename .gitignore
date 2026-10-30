@@ -46,3 +46,7 @@ yarn-error.log*
 
 # Only the empty, documented template may be committed.
 !.env.example
+
+# Browser workers are generated from worker/ by prebuild/predev.
+/public/chat/pii-worker.js
+/public/chat/confidential-worker.js
