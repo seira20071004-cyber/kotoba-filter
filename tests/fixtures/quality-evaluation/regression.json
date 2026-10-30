@@ -1,0 +1,18 @@
+[
+ {"id":"pii-contact","group":"pii","text":"担当者は中村葵です。連絡先はaoi@example.org、電話番号は０９０－００００－０００１です。","targets":["中村葵","aoi@example.org","０９０－００００－０００１"]},
+ {"id":"pii-hiragana","group":"pii","text":"私の名前はひなたです。メールの署名文を考えてください。","targets":["ひなた"]},
+ {"id":"pii-address","group":"pii","text":"配送先住所は東京都千代田区丸の内1丁目1番1号です。","targets":["東京都千代田区丸の内1丁目1番1号"]},
+ {"id":"pii-english","group":"pii","text":"The recipient is Emily Carter. Please contact emily@example.org.","targets":["Emily Carter","emily@example.org"]},
+ {"id":"secret-product","group":"secret","text":"まだ社外には公表していませんが、次の製品では音声から請求書を自動作成する予定です。","targets":["音声から請求書を自動作成"]},
+ {"id":"secret-method","group":"secret","text":"うち独自の組立手順では、接着前に部材を二回冷却すると不良が減ります。","targets":["接着前に部材を二回冷却"]},
+ {"id":"secret-contract","group":"secret","text":"秘密保持契約の対象ですが、この顧客だけ初年度の保守料を免除し、翌年は通常料金に戻します。","targets":["初年度の保守料を免除"]},
+ {"id":"secret-funding","group":"secret","text":"次の資金調達に向け、出資者と議決権の比率を水面下で調整しています。","targets":["出資者と議決権の比率を水面下で調整"]},
+ {"id":"secret-pay","group":"secret","text":"まだ本人には伝えていませんが、来月の査定で営業責任者の基本給を二割下げることが決まりました。","targets":["基本給を二割下げる"]},
+ {"id":"secret-auth","group":"secret","text":"社内の検証環境は、特定のリクエストヘッダーを付けると認証を省略できる状態です。","targets":["特定のリクエストヘッダーを付けると認証を省略"]},
+ {"id":"public-hobby","group":"public","text":"休日は図書館で本を読んで、帰りにパンを買います。","targets":[]},
+ {"id":"public-work","group":"public","text":"今日はオンライン会議に参加して、議事録を整理しました。","targets":[]},
+ {"id":"public-announcement","group":"public","text":"公式サイトで公開済みの新製品について、紹介文を書きたいです。","targets":[]},
+ {"id":"public-advice","group":"public","text":"機密情報を外部に送らないための一般的な注意点を教えてください。","targets":[]},
+ {"id":"public-fiction","group":"public","text":"これは架空の物語です。月面の工房が魔法の靴を製造しています。","targets":[]},
+ {"id":"public-food","group":"public","text":"夕食の献立を考えています。野菜を使ったスープを作りたいです。","targets":[]}
+]

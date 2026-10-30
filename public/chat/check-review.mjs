@@ -1,5 +1,6 @@
-import {abstractionReview,partitionReview,TYPES} from './abstraction.mjs?v=check1';
-import {mergeReview,contextRuleFindings,CATEGORY_REASONS} from './confidential.mjs?v=check1';
+import {refineContextFindings,contextualRiskRules} from './context-policy.mjs?v=quality1';
+import {abstractionReview,partitionReview,TYPES} from './abstraction.mjs?v=quality1';
+import {mergeReview,contextRuleFindings,CATEGORY_REASONS} from './confidential.mjs?v=quality1';
 
 // Business figures, roles and contextual warnings are never selected as PII.
 export function personalReview(original,keywords=[]){
@@ -7,7 +8,7 @@ export function personalReview(original,keywords=[]){
   return partitionReview({...review,findings:review.findings.filter(f=>TYPES[f.kind].rank===1)});
 }
 export function contextCandidates(original,aiFindings=[]){
-  return mergeReview({original,findings:[]},[...contextRuleFindings(original),...aiFindings]).findings.map((f,i)=>({...f,id:'context'+i,kind:'confidential',reason:contextReason(f)}));
+  return mergeReview({original,findings:[]},[...refineContextFindings(original,contextRuleFindings(original)),...contextualRiskRules(original),...refineContextFindings(original,aiFindings)]).findings.map((f,i)=>({...f,id:'context'+i,kind:'confidential',reason:contextReason(f)}));
 }
 export function contextReason(f){
   const labels=f.labels.join('・');

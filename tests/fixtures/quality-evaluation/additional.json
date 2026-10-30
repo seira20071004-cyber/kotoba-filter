@@ -1,0 +1,150 @@
+[
+  {
+    "id": "new-name-role",
+    "group": "pii",
+    "text": "担当者は小林澪です。メールはmio@example.netです。",
+    "targets": [
+      "小林澪",
+      "mio@example.net"
+    ]
+  },
+  {
+    "id": "new-name-self",
+    "group": "pii",
+    "text": "高橋紬と申します。連絡先はtsumugi@example.netです。",
+    "targets": [
+      "高橋紬",
+      "tsumugi@example.net"
+    ]
+  },
+  {
+    "id": "new-name-space",
+    "group": "pii",
+    "text": "ご担当者名：渡辺　蓮。電話番号は０９０－００００－０００２です。",
+    "targets": [
+      "渡辺　蓮",
+      "０９０－００００－０００２"
+    ]
+  },
+  {
+    "id": "new-name-emoji",
+    "group": "pii",
+    "text": "😊 営業担当は吉田凛です。よろしくお願いします。",
+    "targets": [
+      "吉田凛"
+    ]
+  },
+  {
+    "id": "new-general-definition",
+    "group": "public",
+    "text": "営業秘密とは何か、一般的な定義を説明してください。",
+    "targets": []
+  },
+  {
+    "id": "new-general-prevention",
+    "group": "public",
+    "text": "個人情報をAIに送らないための基本的な対策を教えてください。",
+    "targets": []
+  },
+  {
+    "id": "new-fiction",
+    "group": "public",
+    "text": "以下はフィクションの設定です。雲の上の工場が星の砂から透明な帽子を作ります。",
+    "targets": []
+  },
+  {
+    "id": "new-role-unknown",
+    "group": "public",
+    "text": "担当者は未定です。決まり次第お知らせします。",
+    "targets": []
+  },
+  {
+    "id": "new-role-department",
+    "group": "public",
+    "text": "担当は総務部です。一般的な問い合わせの窓口です。",
+    "targets": []
+  },
+  {
+    "id": "new-public-funding",
+    "group": "public",
+    "text": "公開済みの増資について、一般的な解説を読みたいです。",
+    "targets": []
+  },
+  {
+    "id": "new-hobby",
+    "group": "public",
+    "text": "休みの日は公園を散歩して、家で音楽を聴きます。",
+    "targets": []
+  },
+  {
+    "id": "new-funding-private",
+    "group": "secret",
+    "text": "外には出せない話ですが、増資に伴う議決権の割当を投資家と内々に交渉しています。",
+    "targets": [
+      "議決権の割当を投資家と内々に交渉"
+    ]
+  },
+  {
+    "id": "new-investment-public",
+    "group": "public",
+    "text": "資金調達を水面下で進めるとはどういう意味ですか。一般論として知りたいです。",
+    "targets": []
+  },
+  {
+    "id": "new-mixed-advice",
+    "group": "secret",
+    "text": "顧客との未公開の契約では保守費を三年間無料にしましたが、一般的な注意点を教えてください。",
+    "targets": [
+      "保守費を三年間無料"
+    ]
+  },
+  {
+    "id": "new-fiction-real-transition",
+    "group": "secret",
+    "text": "これは架空の物語です。ただし実際の弊社では認証を迂回できる管理画面が残っています。",
+    "targets": [
+      "認証を迂回できる管理画面"
+    ]
+  },
+  {
+    "id": "new-fiction-private",
+    "group": "secret",
+    "text": "これは架空の物語です。社外秘の調達計画では部品の仕入れを一社に集中させます。",
+    "targets": [
+      "部品の仕入れを一社に集中"
+    ]
+  },
+  {
+    "id": "new-technical",
+    "group": "secret",
+    "text": "当社独自の検品手順は社外秘で、圧力を二段階に変えて微細な欠けを見つけます。",
+    "targets": [
+      "圧力を二段階に変えて微細な欠け"
+    ]
+  },
+  {
+    "id": "new-pay",
+    "group": "secret",
+    "text": "まだ公表していない人事案では、開発責任者の給与を来期から一割減らします。",
+    "targets": [
+      "給与を来期から一割減らします"
+    ]
+  },
+  {
+    "id": "new-customer",
+    "group": "secret",
+    "text": "NDA対象の顧客との交渉では、専用設備を無償で貸し出す条件を提案しています。",
+    "targets": [
+      "専用設備を無償で貸し出す"
+    ]
+  },
+  {
+    "id": "new-pii-fiction",
+    "group": "pii",
+    "text": "これは架空の物語です。名前は松本樹、メールはitsuki@example.netです。",
+    "targets": [
+      "松本樹",
+      "itsuki@example.net"
+    ]
+  }
+]

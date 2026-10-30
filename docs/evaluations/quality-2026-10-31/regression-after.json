@@ -1,0 +1,467 @@
+[
+  {
+    "id": "pii-contact",
+    "group": "pii",
+    "text": "担当者は中村葵です。連絡先はaoi@example.org、電話番号は０９０－００００－０００１です。",
+    "targets": [
+      "中村葵",
+      "aoi@example.org",
+      "０９０－００００－０００１"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "担当者は"
+      },
+      {
+        "label": "ルール：人名",
+        "marked": true,
+        "text": "中村葵"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": "です。"
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "連絡先は"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "ルール＋端末内AI：メールアドレス",
+        "marked": true,
+        "text": "aoi@example.org"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "、電話番号は"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "ルール＋端末内AI：電話番号",
+        "marked": true,
+        "text": "０９０－００００－０００１"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "です。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "担当者は[人物1_b07c68a71c97]です。連絡先は[メール1_b07c68a71c97]、電話番号は[電話1_b07c68a71c97]です。",
+    "reasons": "この範囲を隠す\n連絡先はaoi@example.org、電話番号は０９０－００００－０００１です。\n\n確認する理由：端末内AIが文脈上の機密・個人情報の可能性を検出しました。実際に非公開の内容か確認してください。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "pii-hiragana",
+    "group": "pii",
+    "text": "私の名前はひなたです。メールの署名文を考えてください。",
+    "targets": [
+      "ひなた"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "私の名前は"
+      },
+      {
+        "label": "専用PIIモデル：人名",
+        "marked": true,
+        "text": "ひなた"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": "です。"
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "メールの署名文を考えてください。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "私の名前は[人物1_351e8a92532a]です。メールの署名文を考えてください。",
+    "reasons": "この範囲を隠す\nメールの署名文を考えてください。\n\n確認する理由：端末内AIが文脈上の機密・個人情報の可能性を検出しました。実際に非公開の内容か確認してください。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "pii-address",
+    "group": "pii",
+    "text": "配送先住所は東京都千代田区丸の内1丁目1番1号です。",
+    "targets": [
+      "東京都千代田区丸の内1丁目1番1号"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "配送先住所は"
+      },
+      {
+        "label": "ルール：住所",
+        "marked": true,
+        "text": "東京都千代田区丸の内1丁目1番1号"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": "です。"
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "配送先住所は[住所1_edfc3d6aee29]です。",
+    "reasons": ""
+  },
+  {
+    "id": "pii-english",
+    "group": "pii",
+    "text": "The recipient is Emily Carter. Please contact emily@example.org.",
+    "targets": [
+      "Emily Carter",
+      "emily@example.org"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "The recipient is "
+      },
+      {
+        "label": "専用PIIモデル：人名",
+        "marked": true,
+        "text": "Emily Carter"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ". Please contact "
+      },
+      {
+        "label": "ルール：メールアドレス",
+        "marked": true,
+        "text": "emily@example.org"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": "."
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "The recipient is [人物1_fc24b8362a44]. Please contact [メール1_fc24b8362a44].",
+    "reasons": ""
+  },
+  {
+    "id": "secret-product",
+    "group": "secret",
+    "text": "まだ社外には公表していませんが、次の製品では音声から請求書を自動作成する予定です。",
+    "targets": [
+      "音声から請求書を自動作成"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "まだ社外には公表していませんが、次の製品では音声から請求書を自動作成する予定です。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "まだ社外には公表していませんが、次の製品では音声から請求書を自動作成する予定です。",
+    "reasons": "この範囲を隠す\nまだ社外には公表していませんが、次の製品では音声から請求書を自動作成する予定です。\n\n確認する理由：端末内AIが文脈上の機密・個人情報の可能性を検出しました。実際に非公開の内容か確認してください。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "secret-method",
+    "group": "secret",
+    "text": "うち独自の組立手順では、接着前に部材を二回冷却すると不良が減ります。",
+    "targets": [
+      "接着前に部材を二回冷却"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "うち独自の組立手順では、接着前に部材を二回冷却すると不良が減ります。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "うち独自の組立手順では、接着前に部材を二回冷却すると不良が減ります。",
+    "reasons": "この範囲を隠す\nうち独自の組立手順では、接着前に部材を二回冷却すると不良が減ります。\n\n確認する理由：独自の技術・製造ノウハウにつながる内容の可能性があります。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "secret-contract",
+    "group": "secret",
+    "text": "秘密保持契約の対象ですが、この顧客だけ初年度の保守料を免除し、翌年は通常料金に戻します。",
+    "targets": [
+      "初年度の保守料を免除"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "ルール＋端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "秘密保持契約の対象ですが、この顧客だけ初年度の保守料を免除し、翌年は通常料金に戻します。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "秘密保持契約の対象ですが、この顧客だけ初年度の保守料を免除し、翌年は通常料金に戻します。",
+    "reasons": "この範囲を隠す\n秘密保持契約の対象ですが、この顧客だけ初年度の保守料を免除し、翌年は通常料金に戻します。\n\n確認する理由：文章に未公開・社外秘などの指定があるため、開示してよいか確認してください。\n\n検出元：ルール＋端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "secret-funding",
+    "group": "secret",
+    "text": "次の資金調達に向け、出資者と議決権の比率を水面下で調整しています。",
+    "targets": [
+      "出資者と議決権の比率を水面下で調整"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "文脈補助ルール：機密内容の候補",
+        "marked": true,
+        "text": "次の資金調達に向け、出資者と議決権の比率を水面下で調整しています。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "次の資金調達に向け、出資者と議決権の比率を水面下で調整しています。",
+    "reasons": "この範囲を隠す\n次の資金調達に向け、出資者と議決権の比率を水面下で調整しています。\n\n確認する理由：非公開を示す表現と、資金調達・出資条件の具体的な検討が併記されているため確認してください。\n\n検出元：文脈補助ルール ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "secret-pay",
+    "group": "secret",
+    "text": "まだ本人には伝えていませんが、来月の査定で営業責任者の基本給を二割下げることが決まりました。",
+    "targets": [
+      "基本給を二割下げる"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "まだ本人には伝えていませんが、来月の査定で営業責任者の基本給を二割下げることが決まりました。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "まだ本人には伝えていませんが、来月の査定で営業責任者の基本給を二割下げることが決まりました。",
+    "reasons": "この範囲を隠す\nまだ本人には伝えていませんが、来月の査定で営業責任者の基本給を二割下げることが決まりました。\n\n確認する理由：従業員の待遇・評価など個別の人事情報の可能性があります。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "secret-auth",
+    "group": "secret",
+    "text": "社内の検証環境は、特定のリクエストヘッダーを付けると認証を省略できる状態です。",
+    "targets": [
+      "特定のリクエストヘッダーを付けると認証を省略"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "社内の検証環境は、特定のリクエストヘッダーを付けると認証を省略できる状態です。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "社内の検証環境は、特定のリクエストヘッダーを付けると認証を省略できる状態です。",
+    "reasons": "この範囲を隠す\n社内の検証環境は、特定のリクエストヘッダーを付けると認証を省略できる状態です。\n\n確認する理由：認証情報や内部システムの安全性に関わる内容の可能性があります。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "public-hobby",
+    "group": "public",
+    "text": "休日は図書館で本を読んで、帰りにパンを買います。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "休日は図書館で本を読んで、帰りにパンを買います。"
+      }
+    ],
+    "missed": [],
+    "flagged": false,
+    "output": "休日は図書館で本を読んで、帰りにパンを買います。",
+    "reasons": ""
+  },
+  {
+    "id": "public-work",
+    "group": "public",
+    "text": "今日はオンライン会議に参加して、議事録を整理しました。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "今日はオンライン会議に参加して、議事録を整理しました。"
+      }
+    ],
+    "missed": [],
+    "flagged": false,
+    "output": "今日はオンライン会議に参加して、議事録を整理しました。",
+    "reasons": ""
+  },
+  {
+    "id": "public-announcement",
+    "group": "public",
+    "text": "公式サイトで公開済みの新製品について、紹介文を書きたいです。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "公式サイトで公開済みの新製品について、紹介文を書きたいです。"
+      }
+    ],
+    "missed": [],
+    "flagged": false,
+    "output": "公式サイトで公開済みの新製品について、紹介文を書きたいです。",
+    "reasons": ""
+  },
+  {
+    "id": "public-advice",
+    "group": "public",
+    "text": "機密情報を外部に送らないための一般的な注意点を教えてください。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "機密情報を外部に送らないための一般的な注意点を教えてください。"
+      }
+    ],
+    "missed": [],
+    "flagged": false,
+    "output": "機密情報を外部に送らないための一般的な注意点を教えてください。",
+    "reasons": ""
+  },
+  {
+    "id": "public-fiction",
+    "group": "public",
+    "text": "これは架空の物語です。月面の工房が魔法の靴を製造しています。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "これは架空の物語です。月面の工房が魔法の靴を製造しています。"
+      }
+    ],
+    "missed": [],
+    "flagged": false,
+    "output": "これは架空の物語です。月面の工房が魔法の靴を製造しています。",
+    "reasons": ""
+  },
+  {
+    "id": "public-food",
+    "group": "public",
+    "text": "夕食の献立を考えています。野菜を使ったスープを作りたいです。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "夕食の献立を考えています。野菜を使ったスープを作りたいです。"
+      }
+    ],
+    "missed": [],
+    "flagged": false,
+    "output": "夕食の献立を考えています。野菜を使ったスープを作りたいです。",
+    "reasons": ""
+  }
+]

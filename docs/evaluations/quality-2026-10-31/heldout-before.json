@@ -1,0 +1,698 @@
+[
+  {
+    "id": "new-name-role",
+    "group": "pii",
+    "text": "担当者は小林澪です。メールはmio@example.netです。",
+    "targets": [
+      "小林澪",
+      "mio@example.net"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "担当者は"
+      },
+      {
+        "label": "専用PIIモデル：人名",
+        "marked": true,
+        "text": "小林澪"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": "です。"
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "メールは"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "ルール＋端末内AI：メールアドレス",
+        "marked": true,
+        "text": "mio@example.net"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "です。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "担当者は[人物1_7b73cd25e516]です。メールは[メール1_7b73cd25e516]です。",
+    "reasons": "この範囲を隠す\nメールはmio@example.netです。\n\n確認する理由：端末内AIが文脈上の機密・個人情報の可能性を検出しました。実際に非公開の内容か確認してください。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-name-self",
+    "group": "pii",
+    "text": "高橋紬と申します。連絡先はtsumugi@example.netです。",
+    "targets": [
+      "高橋紬",
+      "tsumugi@example.net"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "専用PIIモデル：人名",
+        "marked": true,
+        "text": "高橋"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": "紬と申します。"
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "連絡先は"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "ルール＋端末内AI：メールアドレス",
+        "marked": true,
+        "text": "tsumugi@example.net"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "です。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [
+      "高橋紬"
+    ],
+    "flagged": true,
+    "output": "[人物1_d9ceb7136275]紬と申します。連絡先は[メール1_d9ceb7136275]です。",
+    "reasons": "この範囲を隠す\n連絡先はtsumugi@example.netです。\n\n確認する理由：端末内AIが文脈上の機密・個人情報の可能性を検出しました。実際に非公開の内容か確認してください。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-name-space",
+    "group": "pii",
+    "text": "ご担当者名：渡辺　蓮。電話番号は０９０－００００－０００２です。",
+    "targets": [
+      "渡辺　蓮",
+      "０９０－００００－０００２"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "ご担当者名："
+      },
+      {
+        "label": "専用PIIモデル：人名",
+        "marked": true,
+        "text": "渡辺　蓮"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": "。"
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "電話番号は"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "ルール＋端末内AI：電話番号",
+        "marked": true,
+        "text": "０９０－００００－０００２"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "です。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "ご担当者名：[人物1_288336d613c3]。電話番号は[電話1_288336d613c3]です。",
+    "reasons": "この範囲を隠す\n電話番号は０９０－００００－０００２です。\n\n確認する理由：端末内AIが文脈上の機密・個人情報の可能性を検出しました。実際に非公開の内容か確認してください。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-name-emoji",
+    "group": "pii",
+    "text": "😊 営業担当は吉田凛です。よろしくお願いします。",
+    "targets": [
+      "吉田凛"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "😊 営業担当は"
+      },
+      {
+        "label": "専用PIIモデル：人名",
+        "marked": true,
+        "text": "吉田凛"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": "です。"
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "よろしくお願いします。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "😊 営業担当は[人物1_020ae1edff95]です。よろしくお願いします。",
+    "reasons": "この範囲を隠す\nよろしくお願いします。\n\n確認する理由：端末内AIが文脈上の機密・個人情報の可能性を検出しました。実際に非公開の内容か確認してください。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-general-definition",
+    "group": "public",
+    "text": "営業秘密とは何か、一般的な定義を説明してください。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "営業秘密とは何か、一般的な定義を説明してください。"
+      }
+    ],
+    "missed": [],
+    "flagged": false,
+    "output": "営業秘密とは何か、一般的な定義を説明してください。",
+    "reasons": ""
+  },
+  {
+    "id": "new-general-prevention",
+    "group": "public",
+    "text": "個人情報をAIに送らないための基本的な対策を教えてください。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "個人情報をAIに送らないための基本的な対策を教えてください。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "個人情報をAIに送らないための基本的な対策を教えてください。",
+    "reasons": "この範囲を隠す\n個人情報をAIに送らないための基本的な対策を教えてください。\n\n確認する理由：端末内AIが文脈上の機密・個人情報の可能性を検出しました。実際に非公開の内容か確認してください。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-fiction",
+    "group": "public",
+    "text": "以下はフィクションの設定です。雲の上の工場が星の砂から透明な帽子を作ります。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "以下はフィクションの設定です。"
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "雲の上の工場が星の砂から透明な帽子を作ります。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "以下はフィクションの設定です。雲の上の工場が星の砂から透明な帽子を作ります。",
+    "reasons": "この範囲を隠す\n雲の上の工場が星の砂から透明な帽子を作ります。\n\n確認する理由：端末内AIが文脈上の機密・個人情報の可能性を検出しました。実際に非公開の内容か確認してください。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-role-unknown",
+    "group": "public",
+    "text": "担当者は未定です。決まり次第お知らせします。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "担当者は未定です。"
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "決まり次第お知らせします。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "担当者は未定です。決まり次第お知らせします。",
+    "reasons": "この範囲を隠す\n決まり次第お知らせします。\n\n確認する理由：端末内AIが文脈上の機密・個人情報の可能性を検出しました。実際に非公開の内容か確認してください。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-role-department",
+    "group": "public",
+    "text": "担当は総務部です。一般的な問い合わせの窓口です。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "担当は総務部です。一般的な問い合わせの窓口です。"
+      }
+    ],
+    "missed": [],
+    "flagged": false,
+    "output": "担当は総務部です。一般的な問い合わせの窓口です。",
+    "reasons": ""
+  },
+  {
+    "id": "new-public-funding",
+    "group": "public",
+    "text": "公開済みの増資について、一般的な解説を読みたいです。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "公開済みの増資について、一般的な解説を読みたいです。"
+      }
+    ],
+    "missed": [],
+    "flagged": false,
+    "output": "公開済みの増資について、一般的な解説を読みたいです。",
+    "reasons": ""
+  },
+  {
+    "id": "new-hobby",
+    "group": "public",
+    "text": "休みの日は公園を散歩して、家で音楽を聴きます。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "休みの日は公園を散歩して、家で音楽を聴きます。"
+      }
+    ],
+    "missed": [],
+    "flagged": false,
+    "output": "休みの日は公園を散歩して、家で音楽を聴きます。",
+    "reasons": ""
+  },
+  {
+    "id": "new-funding-private",
+    "group": "secret",
+    "text": "外には出せない話ですが、増資に伴う議決権の割当を投資家と内々に交渉しています。",
+    "targets": [
+      "議決権の割当を投資家と内々に交渉"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "外には出せない話ですが、増資に伴う議決権の割当を投資家と内々に交渉しています。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "外には出せない話ですが、増資に伴う議決権の割当を投資家と内々に交渉しています。",
+    "reasons": "この範囲を隠す\n外には出せない話ですが、増資に伴う議決権の割当を投資家と内々に交渉しています。\n\n確認する理由：端末内AIが文脈上の機密・個人情報の可能性を検出しました。実際に非公開の内容か確認してください。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-investment-public",
+    "group": "public",
+    "text": "資金調達を水面下で進めるとはどういう意味ですか。一般論として知りたいです。",
+    "targets": [],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "資金調達を水面下で進めるとはどういう意味ですか。"
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "一般論として知りたいです。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "資金調達を水面下で進めるとはどういう意味ですか。一般論として知りたいです。",
+    "reasons": "この範囲を隠す\n一般論として知りたいです。\n\n確認する理由：端末内AIが文脈上の機密・個人情報の可能性を検出しました。実際に非公開の内容か確認してください。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-mixed-advice",
+    "group": "secret",
+    "text": "顧客との未公開の契約では保守費を三年間無料にしましたが、一般的な注意点を教えてください。",
+    "targets": [
+      "保守費を三年間無料"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "顧客との未公開の契約では保守費を三年間無料にしましたが、一般的な注意点を教えてください。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "顧客との未公開の契約では保守費を三年間無料にしましたが、一般的な注意点を教えてください。",
+    "reasons": "この範囲を隠す\n顧客との未公開の契約では保守費を三年間無料にしましたが、一般的な注意点を教えてください。\n\n確認する理由：未公開の事業・製品計画につながる内容の可能性があります。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-fiction-real-transition",
+    "group": "secret",
+    "text": "これは架空の物語です。ただし実際の弊社では認証を迂回できる管理画面が残っています。",
+    "targets": [
+      "認証を迂回できる管理画面"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "これは架空の物語です。"
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "ただし実際の弊社では認証を迂回できる管理画面が残っています。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "これは架空の物語です。ただし実際の弊社では認証を迂回できる管理画面が残っています。",
+    "reasons": "この範囲を隠す\nただし実際の弊社では認証を迂回できる管理画面が残っています。\n\n確認する理由：認証情報や内部システムの安全性に関わる内容の可能性があります。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-fiction-private",
+    "group": "secret",
+    "text": "これは架空の物語です。社外秘の調達計画では部品の仕入れを一社に集中させます。",
+    "targets": [
+      "部品の仕入れを一社に集中"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "これは架空の物語です。"
+      },
+      {
+        "label": "ルール＋端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "社外秘の調達計画では部品の仕入れを"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "ルール＋端末内AI：社名・所属",
+        "marked": true,
+        "text": "一社"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "ルール＋端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "に集中させます。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "これは架空の物語です。社外秘の調達計画では部品の仕入れを[組織1_ff302d1177e7]に集中させます。",
+    "reasons": "この範囲を隠す\n社外秘の調達計画では部品の仕入れを一社に集中させます。\n\n確認する理由：文章に未公開・社外秘などの指定があるため、開示してよいか確認してください。\n\n検出元：ルール＋端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-technical",
+    "group": "secret",
+    "text": "当社独自の検品手順は社外秘で、圧力を二段階に変えて微細な欠けを見つけます。",
+    "targets": [
+      "圧力を二段階に変えて微細な欠け"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "ルール＋端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "当社独自の検品手順は社外秘で、圧力を二段階に変えて微細な欠けを見つけます。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "当社独自の検品手順は社外秘で、圧力を二段階に変えて微細な欠けを見つけます。",
+    "reasons": "この範囲を隠す\n当社独自の検品手順は社外秘で、圧力を二段階に変えて微細な欠けを見つけます。\n\n確認する理由：文章に未公開・社外秘などの指定があるため、開示してよいか確認してください。\n\n検出元：ルール＋端末内AI ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-pay",
+    "group": "secret",
+    "text": "まだ公表していない人事案では、開発責任者の給与を来期から一割減らします。",
+    "targets": [
+      "給与を来期から一割減らします"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "ルール＋端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "まだ公表していない人事案では、開発責任者の給与を来期から一割減らします。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "まだ公表していない人事案では、開発責任者の給与を来期から一割減らします。",
+    "reasons": "この範囲を隠す\nまだ公表していない人事案では、開発責任者の給与を来期から一割減らします。\n\n確認する理由：文章に未公開・社外秘などの指定があるため、開示してよいか確認してください。\n\n検出元：ルール＋端末内AI ／ 機密性を断定するものではありません。",
+    "annotationCorrection": {
+      "oldTargets": [
+        "給与を来期から一割減らす"
+      ],
+      "reason": "旧正解語句の減らすは原文の減らしますと一致しないため訂正。入力・実行結果・アプリは変更していない。"
+    }
+  },
+  {
+    "id": "new-customer",
+    "group": "secret",
+    "text": "NDA対象の顧客との交渉では、専用設備を無償で貸し出す条件を提案しています。",
+    "targets": [
+      "専用設備を無償で貸し出す"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "ルール：機密内容の候補",
+        "marked": true,
+        "text": "NDA対象の顧客との交渉では、専用設備を無償で貸し出す条件を提案しています。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "NDA対象の顧客との交渉では、専用設備を無償で貸し出す条件を提案しています。",
+    "reasons": "この範囲を隠す\nNDA対象の顧客との交渉では、専用設備を無償で貸し出す条件を提案しています。\n\n確認する理由：文章に未公開・社外秘などの指定があるため、開示してよいか確認してください。\n\n検出元：ルール ／ 機密性を断定するものではありません。"
+  },
+  {
+    "id": "new-pii-fiction",
+    "group": "pii",
+    "text": "これは架空の物語です。名前は松本樹、メールはitsuki@example.netです。",
+    "targets": [
+      "松本樹",
+      "itsuki@example.net"
+    ],
+    "nodes": [
+      {
+        "label": null,
+        "marked": false,
+        "text": "これは架空の物語です。"
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "名前は"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "ルール＋端末内AI：人名",
+        "marked": true,
+        "text": "松本樹"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "、メールは"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "ルール＋端末内AI：メールアドレス",
+        "marked": true,
+        "text": "itsuki@example.net"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      },
+      {
+        "label": "端末内AI：機密内容の候補",
+        "marked": true,
+        "text": "です。"
+      },
+      {
+        "label": null,
+        "marked": false,
+        "text": ""
+      }
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "これは架空の物語です。名前は[人物1_0536dc8acf33]、メールは[メール1_0536dc8acf33]です。",
+    "reasons": "この範囲を隠す\n名前は松本樹、メールはitsuki@example.netです。\n\n確認する理由：端末内AIが文脈上の機密・個人情報の可能性を検出しました。実際に非公開の内容か確認してください。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。"
+  }
+]

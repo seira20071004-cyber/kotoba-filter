@@ -1,8 +1,8 @@
-import {TYPES,partitionReview,abstractMessage,addAbstractionManual} from './abstraction.mjs?v=check1';
-import * as semanticDetector from './local-detector.mjs?v=check1';
-import * as piiDetector from './pii-detector.mjs?v=check1';
-import {restoreText,applyIdentityLinks,mergePIICandidates} from './pii-core.mjs?v=check1';
-import {personalReview,contextCandidates,initialSelection,selectContext,contextState} from './check-review.mjs?v=check1';
+import {TYPES,partitionReview,abstractMessage,addAbstractionManual} from './abstraction.mjs?v=quality1';
+import * as semanticDetector from './local-detector.mjs?v=quality1';
+import * as piiDetector from './pii-detector.mjs?v=quality1';
+import {restoreText,applyIdentityLinks,mergePIICandidates} from './pii-core.mjs?v=quality1';
+import {personalReview,contextCandidates,initialSelection,selectContext,contextState} from './check-review.mjs?v=quality1';
 const $=s=>document.querySelector(s),input=$('#messageInput');
 let review=null,baseReview=null,contexts=[],selected=new Set(),mapping=[],links=[],manualRanges=[],busy=false,complete=false,generation=0,preparing=false,composing=false,session='';
 const withContext=()=>$('#includeConfidential').checked;
