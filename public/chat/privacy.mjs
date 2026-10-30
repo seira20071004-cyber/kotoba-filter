@@ -9,7 +9,7 @@ export function normalizedView(original){
 }
 function luhn(digits){let n=0;for(let i=digits.length-1,odd=false;i>=0;i--,odd=!odd){let d=Number(digits[i]);if(odd){d*=2;if(d>9)d-=9;}n+=d;}return n%10===0;}
 const rules=[
- ['メールアドレス',/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/giu],
+ ['メールアドレス',/[\p{L}\p{N}._%+-]+@[\p{L}\p{N}.-]+\.(?:xn--[A-Z0-9-]+|[A-Z]{2,}|日本|みんな)/giu],
  ['URL',/https?:\/\/[^\s<>"'。、]+/giu],
  ['アカウントID',/(?<![A-Za-z0-9._%+-])@[A-Za-z0-9_][A-Za-z0-9_.-]{2,}/gu],
  ['郵便番号',/〒?\d{3}[- ]\d{4}/gu],
@@ -17,6 +17,9 @@ const rules=[
  ['カード・口座・識別番号',/(?:カード番号|クレカ(?:番号)?|クレジットカード(?:番号)?|口座番号|マイナンバー)(?:は|[:：=])?\s*(\d(?:[ \p{Pd}−ー]*\d){2,31})/gu,1],
  ['セキュリティコード',/(?:CVV|CVC|PIN|暗証番号|セキュリティコード)(?:は|[:：=])?\s*(\d{3,8})/giu,1],
  ['有効期限',/(?:カードの)?有効期限(?:は|[:：=])?\s*(\d{1,2}\s*[/-]\s*\d{2,4})/gu,1],
+ ['秘密情報',/(?:password|passwd|api[_ -]?key|access[_ -]?token|secret)\s*[:=]\s*["']?([A-Za-z0-9_./+=-]{6,})/giu,1],
+ ['秘密情報',/(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|hf_[A-Za-z0-9]{20,}|AKIA[A-Z0-9]{16})/gu],
+ ['秘密情報',/(?:Authorization\s*[:=]\s*)?Bearer\s+([A-Za-z0-9._~-]{10,})/giu,1],
  ['秘密情報',/sk-(?:proj-)?[A-Za-z0-9_-]{12,}/gu],
  ['秘密情報',/(?:パスワード|認証コード|ワンタイムパスワード)(?:は|[:：=])\s*([^\s。、！？!,]{3,100})/gu,1],
  ['住所',/(?:北海道|東京都|大阪府|京都府|[一-龯]{2,3}県)[一-龯ぁ-んァ-ヶ]{1,12}(?:市|区|町|村)[一-龯ぁ-んァ-ヶ]{1,12}\d[0-9丁目番地号 \p{Pd}−ー]{0,20}/gu],
@@ -30,7 +33,7 @@ export function detectPrivacy(original){
  if(typeof original!=='string'||original.length>2000)throw Error('確認する文章は2,000文字以内にしてください。');
  const view=normalizedView(original),spans=[];
  const add=(start,end,label)=>{if(start<0||end<=start||end>view.text.length)return;spans.push({start:view.starts[start],end:view.ends[end-1],labels:[label]});};
- for(const[label,re,group]of rules){for(const m of view.text.matchAll(re)){const quote=group?m[group]:m[0];if((label==='氏名'&&/^(?:秘密|内緒|非公開|仲良くなってから)$/.test(quote.trim()))||(label==='駅名'&&/^(?:最寄り|最寄|最寄の)?駅$/.test(quote)))continue;const start=m.index+(group?m[0].lastIndexOf(quote):0);add(start,start+quote.length,label);}}
+ for(const[label,re,group]of rules){for(const m of view.text.matchAll(re)){let quote=group?m[group]:m[0];if(label==='メールアドレス')quote=quote.replace(/^.*(?:メール(?:アドレス)?|連絡先)(?:は|[:：])\s*/u,'');if(label==='勤務先')quote=quote.replace(/(?:です|でした|から|へ|に)$/u,'').replace(/の[一-龯]{1,5}(?:さん|様)$/u,'');if((label==='氏名'&&/^(?:秘密|内緒|非公開|仲良くなってから)$/.test(quote.trim()))||(label==='駅名'&&/^(?:最寄り|最寄|最寄の)?駅$/.test(quote)))continue;const start=m.index+m[0].lastIndexOf(quote);add(start,start+quote.length,label);}}
  // Whole number runs avoid masking just part of a card as a phone number.
  for(const m of view.text.matchAll(/\+?\d(?:[ \p{Pd}−ー]*\d){5,}/gu)){const digits=m[0].replace(/\D/g,'');if((/^0[1-9]/.test(digits)&&[10,11].includes(digits.length))||(m[0].startsWith('+81')&&[12,13].includes(digits.length)))add(m.index,m.index+m[0].length,'電話番号');else if(digits.length>=13&&digits.length<=19&&luhn(digits))add(m.index,m.index+m[0].length,'カード番号の候補');}
  spans.sort((a,b)=>a.start-b.start||b.end-a.end);const merged=[];

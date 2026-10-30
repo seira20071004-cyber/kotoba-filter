@@ -1,0 +1,87 @@
+[
+  {
+    "id": "bare-japanese-name",
+    "text": "担当は山田太郎です。返信の言い方を考えてください。",
+    "private": [
+      "山田太郎"
+    ]
+  },
+  {
+    "id": "two-names",
+    "text": "田中花子が資料を送り、鈴木健一が内容を確認しました。",
+    "private": [
+      "田中花子",
+      "鈴木健一"
+    ]
+  },
+  {
+    "id": "hiragana-name",
+    "text": "私の名前はさくらです。丁寧な自己紹介文を考えてください。",
+    "private": [
+      "さくら"
+    ]
+  },
+  {
+    "id": "english-name",
+    "text": "My customer is Alice Morgan. Her email is alice@example.com.",
+    "private": [
+      "Alice Morgan",
+      "alice@example.com"
+    ]
+  },
+  {
+    "id": "unlabelled-address",
+    "text": "荷物は東京都新宿区西新宿2丁目8番1号に送ってください。",
+    "private": [
+      "東京都新宿区西新宿2丁目8番1号"
+    ]
+  },
+  {
+    "id": "nfkc-contact",
+    "text": "メールはｔａｒｏ＠ｅｘａｍｐｌｅ．ｃｏｍ、電話は０９０－００００－００００です。",
+    "private": [
+      "ｔａｒｏ＠ｅｘａｍｐｌｅ．ｃｏｍ",
+      "０９０－００００－００００"
+    ]
+  },
+  {
+    "id": "emoji-name",
+    "text": "😊 担当は佐藤美咲です。彼女に説明したいです。",
+    "private": [
+      "佐藤美咲"
+    ]
+  },
+  {
+    "id": "private-birthday",
+    "text": "私の生年月日は1998年7月14日です。",
+    "private": [
+      "1998年7月14日"
+    ]
+  },
+  {
+    "id": "test-card",
+    "text": "テスト用のカード番号は4242 4242 4242 4242です。",
+    "private": [
+      "4242 4242 4242 4242"
+    ]
+  },
+  {
+    "id": "ordinary-hobby",
+    "text": "休日は映画を見て、友達とカレーを食べます。",
+    "private": []
+  },
+  {
+    "id": "general-advice",
+    "text": "個人情報をAIへ送る前の注意点を教えてください。",
+    "private": []
+  },
+  {
+    "id": "ambiguous-surname",
+    "text": "山田太郎と山田花子がいます。山田さんが話しました。",
+    "private": [
+      "山田太郎",
+      "山田花子",
+      "山田"
+    ]
+  }
+]
