@@ -1,5 +1,5 @@
 // Detection uses a normalized view; every result points back to unchanged original text.
-export const REVIEW_VERSION='rules-1';
+export const REVIEW_VERSION='context-2';
 export const HIDDEN='[非表示]';
 export function normalizedView(original){
  const starts=[],ends=[];let text='';
