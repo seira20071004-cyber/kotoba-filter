@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Privacy Chat",
-  description: "言葉を交わす、ここから。AIと気軽に話せるチャット。",
+  title: "ことばフィルター",
+  description: "共有前の文章から、個人情報・機密情報の候補を端末内でチェック。",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
