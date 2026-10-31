@@ -9,3 +9,14 @@ test('カード番号を途中の電話番号だけとして切り取らない',
 test('都道府県・住所・URL・所属を検出',()=>{for(const raw of ['東京都新宿区西新宿２丁目８番１号','https://example.com/private','株式会社サンプルです','早稲田大学です'])assert(detectPrivacy(raw).findings.length,raw);});
 test('普通の文章・HTML・記号を勝手に変えず候補ゼロで保持',()=>{for(const raw of ['映画が好きです！\nありがとう😊','<img src=x onerror=alert(1)>','  今日はどうしよう？  ',HIDDEN]){const r=detectPrivacy(raw);assert.equal(r.findings.length,0);assert.equal(reviewedMessage(r,new Set()),raw);}});
 test('選択範囲の偽造や別の原文の選択IDを拒否する',()=>{const r=detectPrivacy('渋谷です');assert.throws(()=>reviewedMessage(r,new Set(['unknown'])));assert.throws(()=>reviewedMessage({...r,original:'新宿です'},new Set(['p0'])));assert.throws(()=>reviewedMessage({...r,findings:[{...r.findings[0],start:-1}]},new Set(['p0'])));});
+test('改行で終わる氏名欄・かなや中黒を含む名乗りを原文のまま検出する',()=>{
+ for(const [raw,name] of [['担当者名：山田 太郎\n電話番号：090(0000)0001','山田 太郎'],['氏名：佐々木 葵\r\nメール：a@example.com','佐々木 葵'],['お名前：ジョン・スミス\nよろしくお願いします','ジョン・スミス'],['Name is not Japanese.\n氏名：John Smith','John Smith'],['せいらと申します。','せいら'],['名前はｼﾞｮﾝ･ｽﾐｽです。','ｼﾞｮﾝ･ｽﾐｽ']]){
+  const r=detectPrivacy(raw);assert(r.findings.some(f=>f.text===name&&f.labels.includes('氏名')),raw);assert(!reviewedMessage(r,new Set(r.findings.map(f=>f.id))).includes(name));
+ }
+});
+test('括弧・全角・国際表記の電話番号をモデルなしでも全桁保護する',()=>{
+ for(const phone of ['090(0000)0001','03（0000）0001','０９０（００００）０００１','+81 3 0000 0001','＋８１（０）３－００００－０００１','+81 90 0000 0001']){
+  const raw=`電話番号：${phone}です。`,r=detectPrivacy(raw);assert(r.findings.some(f=>f.text===phone&&f.labels.includes('電話番号')),phone);assert.equal(reviewedMessage(r,new Set(r.findings.map(f=>f.id))),'電話番号：[非表示]です。');
+ }
+ for(const raw of ['2026-11-01','注文番号：1234567890','09000\n000001','担当者は未定です。名前は秘密です。','休日は映画を見ます。'])assert.equal(detectPrivacy(raw).findings.length,0,raw);
+});

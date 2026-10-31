@@ -20,3 +20,14 @@ test('NERがメールを名前や組織へ分割しても、メール全体を�
 test('メールの国際表記や英語ラベルの認証情報もルールで補う',()=>{for(const raw of ['連絡先はユーザー@例え.jpです。','password=synthetic-test-secret','api_key: synthetic_test_key_12345','Bearer synthetic-test-bearer-token']){const r=abstractionReview(raw),out=abstractMessage(r,levelSelection(r,'light')).text;assert.notEqual(out,raw);assert(!out.includes('synthetic-test-secret'));}});
 test('会社名の後の丁寧語や人物の呼称を組織名に巻き込まない',()=>{const r=abstractionReview('株式会社サンプルです。');assert.equal(abstractMessage(r,levelSelection(r,'light')).text,'[組織1]です。');});
 test('カードと郵便番号の候補が重なっても識別番号として置換する',()=>{const r=abstractionReview('テスト用のカード番号は4242 4242 4242 4242です。'),p=abstractMessage(r,levelSelection(r,'light'),{session});assert.equal(p.mapping[0].kind,'identifier');assert(p.text.includes('[識別番号1_'));});
+
+test('電話のAIスパンに説明ラベルや語尾が含まれても番号だけを置換する',()=>{
+ const original='電話番号は０９０（００００）０００１です。';
+ const spans=groundPII(original,[{start:0,end:original.normalize('NFKC').length,category:'private_phone'}]);
+ assert.equal(original.slice(spans[0].start,spans[0].end),'０９０（００００）０００１');
+});
+
+test('正規化で改行をまたいだ人名スパンは別々の人物に分割する',()=>{
+ const original='ジョン・スミス\nせいら',spans=groundPII(original,[{start:0,end:original.length,category:'private_person'}]);
+ assert.deepEqual(spans.map(f=>original.slice(f.start,f.end)),['ジョン・スミス','せいら']);
+});

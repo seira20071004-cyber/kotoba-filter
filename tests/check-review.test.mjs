@@ -31,3 +31,8 @@ test('複数の機密候補を個別に選べ、別の候補や普通の文へ�
  const text='未発表の新製品を出します。週末は映画を見ます。社外秘の契約を結びました。',cs=contextCandidates(text),r=partitionReview(personalReview(text),cs);
  assert.equal(cs.length,2);const selected=selectContext(r,initialSelection(r),cs[0],true),out=abstractMessage(r,selected).text;assert(!out.includes('未発表の新製品'));assert(out.includes('週末は映画を見ます。'));assert(out.includes('社外秘の契約'));assert(!contextState(r,selected,cs[1]));
 });
+test('改行した氏名欄と括弧付き電話は個人情報として初期選択し、機密確認から外しても保護する',()=>{
+ const text='担当者名：山田 太郎\n電話番号：090(0000)0001',p=personalReview(text),cs=contextCandidates(text,[{start:0,end:text.length,text,labels:['文脈上の機密候補'],sources:['端末内AI']}],p);
+ assert.equal(cs.length,0);assert(p.findings.some(f=>f.kind==='person'&&f.text==='山田 太郎'));assert(p.findings.some(f=>f.kind==='phone'&&f.text==='090(0000)0001'));
+ const out=abstractMessage(p,initialSelection(p)).text;assert(!out.includes('山田'));assert(!out.includes('090'));assert(out.includes('\n電話番号：'));
+});

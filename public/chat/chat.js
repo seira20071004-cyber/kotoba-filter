@@ -1,8 +1,8 @@
-import {TYPES,partitionReview,abstractMessage,addAbstractionManual} from './abstraction.mjs?v=review2';
-import * as semanticDetector from './local-detector.mjs?v=review2';
-import * as piiDetector from './pii-detector.mjs?v=review2';
-import {restoreText,applyIdentityLinks,mergePIICandidates} from './pii-core.mjs?v=review2';
-import {personalReview,contextCandidates,initialSelection,selectContext,contextState,contextKey,pendingContexts,projectSelection,copyIsReady} from './check-review.mjs?v=review2';
+import {TYPES,partitionReview,abstractMessage,addAbstractionManual} from './abstraction.mjs?v=contacts3';
+import * as semanticDetector from './local-detector.mjs?v=contacts3';
+import * as piiDetector from './pii-detector.mjs?v=contacts3';
+import {restoreText,applyIdentityLinks,mergePIICandidates} from './pii-core.mjs?v=contacts3';
+import {personalReview,contextCandidates,initialSelection,selectContext,contextState,contextKey,pendingContexts,projectSelection,copyIsReady} from './check-review.mjs?v=contacts3';
 const $=s=>document.querySelector(s),input=$('#messageInput');
 let review=null,baseReview=null,contexts=[],selected=new Set(),mapping=[],links=[],manualRanges=[],busy=false,complete=false,generation=0,preparing=false,composing=false,session='';
 let contextDecisions=new Map(),preparationEpoch=0;
