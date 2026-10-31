@@ -1,0 +1,250 @@
+[
+  {
+    "id": "new-name-role",
+    "group": "pii",
+    "text": "担当者は小林澪です。メールはmio@example.netです。",
+    "targets": [
+      "小林澪",
+      "mio@example.net"
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "担当者は[人物1_4c4d22501528]です。メールは[メール1_4c4d22501528]です。",
+    "reasons": "",
+    "copyReady": true
+  },
+  {
+    "id": "new-name-self",
+    "group": "pii",
+    "text": "高橋紬と申します。連絡先はtsumugi@example.netです。",
+    "targets": [
+      "高橋紬",
+      "tsumugi@example.net"
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "[人物1_1188d9fb0515][人物2_1188d9fb0515]と申します。連絡先は[メール1_1188d9fb0515]です。",
+    "reasons": "",
+    "copyReady": true
+  },
+  {
+    "id": "new-name-space",
+    "group": "pii",
+    "text": "ご担当者名：渡辺　蓮。電話番号は０９０－００００－０００２です。",
+    "targets": [
+      "渡辺　蓮",
+      "０９０－００００－０００２"
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "ご担当者名：[人物1_8a0890537720]。電話番号は[電話1_8a0890537720]です。",
+    "reasons": "",
+    "copyReady": true
+  },
+  {
+    "id": "new-name-emoji",
+    "group": "pii",
+    "text": "😊 営業担当は吉田凛です。よろしくお願いします。",
+    "targets": [
+      "吉田凛"
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "😊 営業担当は[人物1_15bf8e8c97c8]です。よろしくお願いします。",
+    "reasons": "",
+    "copyReady": true
+  },
+  {
+    "id": "new-general-definition",
+    "group": "public",
+    "text": "営業秘密とは何か、一般的な定義を説明してください。",
+    "targets": [],
+    "missed": [],
+    "flagged": false,
+    "output": "営業秘密とは何か、一般的な定義を説明してください。",
+    "reasons": "",
+    "copyReady": true
+  },
+  {
+    "id": "new-general-prevention",
+    "group": "public",
+    "text": "個人情報をAIに送らないための基本的な対策を教えてください。",
+    "targets": [],
+    "missed": [],
+    "flagged": false,
+    "output": "個人情報をAIに送らないための基本的な対策を教えてください。",
+    "reasons": "",
+    "copyReady": true
+  },
+  {
+    "id": "new-fiction",
+    "group": "public",
+    "text": "以下はフィクションの設定です。雲の上の工場が星の砂から透明な帽子を作ります。",
+    "targets": [],
+    "missed": [],
+    "flagged": false,
+    "output": "以下はフィクションの設定です。雲の上の工場が星の砂から透明な帽子を作ります。",
+    "reasons": "",
+    "copyReady": true
+  },
+  {
+    "id": "new-role-unknown",
+    "group": "public",
+    "text": "担当者は未定です。決まり次第お知らせします。",
+    "targets": [],
+    "missed": [],
+    "flagged": false,
+    "output": "担当者は未定です。決まり次第お知らせします。",
+    "reasons": "",
+    "copyReady": true
+  },
+  {
+    "id": "new-role-department",
+    "group": "public",
+    "text": "担当は総務部です。一般的な問い合わせの窓口です。",
+    "targets": [],
+    "missed": [],
+    "flagged": false,
+    "output": "担当は総務部です。一般的な問い合わせの窓口です。",
+    "reasons": "",
+    "copyReady": true
+  },
+  {
+    "id": "new-public-funding",
+    "group": "public",
+    "text": "公開済みの増資について、一般的な解説を読みたいです。",
+    "targets": [],
+    "missed": [],
+    "flagged": false,
+    "output": "公開済みの増資について、一般的な解説を読みたいです。",
+    "reasons": "",
+    "copyReady": true
+  },
+  {
+    "id": "new-hobby",
+    "group": "public",
+    "text": "休みの日は公園を散歩して、家で音楽を聴きます。",
+    "targets": [],
+    "missed": [],
+    "flagged": false,
+    "output": "休みの日は公園を散歩して、家で音楽を聴きます。",
+    "reasons": "",
+    "copyReady": true
+  },
+  {
+    "id": "new-funding-private",
+    "group": "secret",
+    "text": "外には出せない話ですが、増資に伴う議決権の割当を投資家と内々に交渉しています。",
+    "targets": [
+      "議決権の割当を投資家と内々に交渉"
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "外には出せない話ですが、増資に伴う議決権の割当を投資家と内々に交渉しています。",
+    "reasons": "この範囲を隠す\n外には出せない話ですが、増資に伴う議決権の割当を投資家と内々に交渉しています。\n\n確認する理由：非公開を示す表現と、資金調達・出資条件の具体的な検討が併記されているため確認してください。\n\n検出元：文脈補助ルール＋端末内AI ／ 機密性を断定するものではありません。\n内容を残す\n選択待ち",
+    "copyReady": false
+  },
+  {
+    "id": "new-investment-public",
+    "group": "public",
+    "text": "資金調達を水面下で進めるとはどういう意味ですか。一般論として知りたいです。",
+    "targets": [],
+    "missed": [],
+    "flagged": false,
+    "output": "資金調達を水面下で進めるとはどういう意味ですか。一般論として知りたいです。",
+    "reasons": "",
+    "copyReady": true
+  },
+  {
+    "id": "new-mixed-advice",
+    "group": "secret",
+    "text": "顧客との未公開の契約では保守費を三年間無料にしましたが、一般的な注意点を教えてください。",
+    "targets": [
+      "保守費を三年間無料"
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "顧客との未公開の契約では保守費を三年間無料にしましたが、一般的な注意点を教えてください。",
+    "reasons": "この範囲を隠す\n顧客との未公開の契約では保守費を三年間無料にしましたが、一般的な注意点を教えてください。\n\n確認する理由：未公開の事業・製品計画につながる内容の可能性があります。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。\n内容を残す\n選択待ち",
+    "copyReady": false
+  },
+  {
+    "id": "new-fiction-real-transition",
+    "group": "secret",
+    "text": "これは架空の物語です。ただし実際の弊社では認証を迂回できる管理画面が残っています。",
+    "targets": [
+      "認証を迂回できる管理画面"
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "これは架空の物語です。ただし実際の弊社では認証を迂回できる管理画面が残っています。",
+    "reasons": "この範囲を隠す\nただし実際の弊社では認証を迂回できる管理画面が残っています。\n\n確認する理由：認証情報や内部システムの安全性に関わる内容の可能性があります。\n\n検出元：端末内AI ／ 機密性を断定するものではありません。\n内容を残す\n選択待ち",
+    "copyReady": false
+  },
+  {
+    "id": "new-fiction-private",
+    "group": "secret",
+    "text": "これは架空の物語です。社外秘の調達計画では部品の仕入れを一社に集中させます。",
+    "targets": [
+      "部品の仕入れを一社に集中"
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "これは架空の物語です。社外秘の調達計画では部品の仕入れを[組織1_9b87bf59921c]に集中させます。",
+    "reasons": "この範囲を隠す\n社外秘の調達計画では部品の仕入れを一社に集中させます。\n\n確認する理由：文章に未公開・社外秘などの指定があるため、開示してよいか確認してください。\n\n検出元：ルール＋端末内AI ／ 機密性を断定するものではありません。\n内容を残す\n選択待ち",
+    "copyReady": false
+  },
+  {
+    "id": "new-technical",
+    "group": "secret",
+    "text": "当社独自の検品手順は社外秘で、圧力を二段階に変えて微細な欠けを見つけます。",
+    "targets": [
+      "圧力を二段階に変えて微細な欠け"
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "当社独自の検品手順は社外秘で、圧力を二段階に変えて微細な欠けを見つけます。",
+    "reasons": "この範囲を隠す\n当社独自の検品手順は社外秘で、圧力を二段階に変えて微細な欠けを見つけます。\n\n確認する理由：文章に未公開・社外秘などの指定があるため、開示してよいか確認してください。\n\n検出元：ルール＋端末内AI ／ 機密性を断定するものではありません。\n内容を残す\n選択待ち",
+    "copyReady": false
+  },
+  {
+    "id": "new-pay",
+    "group": "secret",
+    "text": "まだ公表していない人事案では、開発責任者の給与を来期から一割減らします。",
+    "targets": [
+      "給与を来期から一割減らします"
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "まだ公表していない人事案では、開発責任者の給与を来期から一割減らします。",
+    "reasons": "この範囲を隠す\nまだ公表していない人事案では、開発責任者の給与を来期から一割減らします。\n\n確認する理由：文章に未公開・社外秘などの指定があるため、開示してよいか確認してください。\n\n検出元：ルール＋端末内AI ／ 機密性を断定するものではありません。\n内容を残す\n選択待ち",
+    "copyReady": false
+  },
+  {
+    "id": "new-customer",
+    "group": "secret",
+    "text": "NDA対象の顧客との交渉では、専用設備を無償で貸し出す条件を提案しています。",
+    "targets": [
+      "専用設備を無償で貸し出す"
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "NDA対象の顧客との交渉では、専用設備を無償で貸し出す条件を提案しています。",
+    "reasons": "この範囲を隠す\nNDA対象の顧客との交渉では、専用設備を無償で貸し出す条件を提案しています。\n\n確認する理由：文章に未公開・社外秘などの指定があるため、開示してよいか確認してください。\n\n検出元：ルール ／ 機密性を断定するものではありません。\n内容を残す\n選択待ち",
+    "copyReady": false
+  },
+  {
+    "id": "new-pii-fiction",
+    "group": "pii",
+    "text": "これは架空の物語です。名前は松本樹、メールはitsuki@example.netです。",
+    "targets": [
+      "松本樹",
+      "itsuki@example.net"
+    ],
+    "missed": [],
+    "flagged": true,
+    "output": "これは架空の物語です。名前は[人物1_54f8bc6e8cf3]、メールは[メール1_54f8bc6e8cf3]です。",
+    "reasons": "",
+    "copyReady": true
+  }
+]

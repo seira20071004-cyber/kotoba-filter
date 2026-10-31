@@ -1,14 +1,14 @@
-import {refineContextFindings,contextualRiskRules} from './context-policy.mjs?v=quality1';
-import {abstractionReview,partitionReview,TYPES} from './abstraction.mjs?v=quality1';
-import {mergeReview,contextRuleFindings,CATEGORY_REASONS} from './confidential.mjs?v=quality1';
+import {refineContextFindings,contextualRiskRules} from './context-policy.mjs?v=review2';
+import {abstractionReview,partitionReview,TYPES} from './abstraction.mjs?v=review2';
+import {mergeReview,contextRuleFindings,CATEGORY_REASONS} from './confidential.mjs?v=review2';
 
 // Business figures, roles and contextual warnings are never selected as PII.
 export function personalReview(original,keywords=[]){
   const review=abstractionReview(original,keywords);
   return partitionReview({...review,findings:review.findings.filter(f=>TYPES[f.kind].rank===1)});
 }
-export function contextCandidates(original,aiFindings=[]){
-  return mergeReview({original,findings:[]},[...refineContextFindings(original,contextRuleFindings(original)),...contextualRiskRules(original),...refineContextFindings(original,aiFindings)]).findings.map((f,i)=>({...f,id:'context'+i,kind:'confidential',reason:contextReason(f)}));
+export function contextCandidates(original,aiFindings=[],personal=personalReview(original)){
+  return mergeReview({original,findings:[]},[...refineContextFindings(original,contextRuleFindings(original)),...contextualRiskRules(original),...refineContextFindings(original,aiFindings)]).findings.filter(f=>!contactOnlyCandidate(original,f,personal)).map((f,i)=>({...f,id:'context'+i,kind:'confidential',reason:contextReason(f)}));
 }
 export function contextReason(f){
   const labels=f.labels.join('・');
@@ -33,3 +33,22 @@ export function contextState(review,selected,candidate){
   const parts=review.findings.filter(f=>f.start>=candidate.start&&f.end<=candidate.end);
   return parts.length>0&&parts.every(f=>selected.has(f.id));
 }
+
+// Suppress a duplicate context card only for a complete contact template already covered by PII.
+export function contactOnlyCandidate(original,candidate,personal){
+ const spans=personal.findings.filter(f=>f.start>=candidate.start&&f.end<=candidate.end&&['person','company','email','phone','address','url','personalDate','identifier','contact'].includes(f.kind));
+ if(!spans.length)return false;
+ let rest='',cursor=candidate.start;
+ for(const f of spans){rest+=original.slice(cursor,f.start);cursor=f.end;}
+ rest+=original.slice(cursor,candidate.end);
+ return /^(?:(?:ご?担当者名|担当者|担当|氏名|名前|本名|連絡先|メールアドレス|メール|電話番号|電話|住所|所在地|に返信してください|に連絡してください|へ連絡してください|生年月日|誕生日|会社名|勤務先|は|です|さん|様)|[\s、。,:：=・])*$/u.test(rest);
+}
+export const contextKey=c=>c.start+':'+c.end;
+export function pendingContexts(contexts,decisions){return contexts.filter(c=>!decisions.has(contextKey(c)));}
+export function projectSelection(previous,selected,next,forced=[]){
+ if(previous.original!==next.original)throw Error('原文が変わっています。再チェックしてください。');
+ const ranges=[...previous.findings.filter(f=>selected.has(f.id)),...forced].sort((a,b)=>a.start-b.start);
+ const covered=f=>{let end=f.start;for(const r of ranges){if(r.end<=end)continue;if(r.start>end)break;end=Math.max(end,r.end);if(end>=f.end)return true;}return false;};
+ return new Set(next.findings.filter(covered).map(f=>f.id));
+}
+export function copyIsReady(complete,locked,contexts,decisions){return !!complete&&!locked&&pendingContexts(contexts,decisions).length===0;}
