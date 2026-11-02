@@ -36,3 +36,4 @@ test('改行した氏名欄と括弧付き電話は個人情報として初期�
  assert.equal(cs.length,0);assert(p.findings.some(f=>f.kind==='person'&&f.text==='山田 太郎'));assert(p.findings.some(f=>f.kind==='phone'&&f.text==='090(0000)0001'));
  const out=abstractMessage(p,initialSelection(p)).text;assert(!out.includes('山田'));assert(!out.includes('090'));assert(out.includes('\n電話番号：'));
 });
+test('機密範囲の一部しか選択されていない場合は保護済みと判定しない',()=>{const original='秘密の内容です。',candidate={start:0,end:original.length},review={original,findings:[{id:'partial',start:0,end:2}]};assert.equal(contextState(review,new Set(['partial']),candidate),false);});

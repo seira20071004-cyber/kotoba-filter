@@ -1,6 +1,6 @@
-import {refineContextFindings,contextualRiskRules} from './context-policy.mjs?v=full1';
-import {abstractionReview,partitionReview,TYPES} from './abstraction.mjs?v=full1';
-import {mergeReview,contextRuleFindings,CATEGORY_REASONS} from './confidential.mjs?v=full1';
+import {refineContextFindings,contextualRiskRules} from './context-policy.mjs?v=boundary2';
+import {abstractionReview,partitionReview,TYPES} from './abstraction.mjs?v=boundary2';
+import {mergeReview,contextRuleFindings,CATEGORY_REASONS} from './confidential.mjs?v=boundary2';
 
 // Business figures, roles and contextual warnings are never selected as PII.
 export function personalReview(original,keywords=[]){
@@ -30,8 +30,10 @@ export function selectContext(review,selected,candidate,hide){
   return next;
 }
 export function contextState(review,selected,candidate){
-  const parts=review.findings.filter(f=>f.start>=candidate.start&&f.end<=candidate.end);
-  return parts.length>0&&parts.every(f=>selected.has(f.id));
+  const parts=review.findings.filter(f=>f.start>=candidate.start&&f.end<=candidate.end).sort((a,b)=>a.start-b.start);
+  let cursor=candidate.start;
+  for(const f of parts){if(f.start!==cursor||!selected.has(f.id))return false;cursor=f.end;}
+  return parts.length>0&&cursor===candidate.end;
 }
 
 // Suppress a duplicate context card only for a complete contact template already covered by PII.
@@ -51,4 +53,4 @@ export function projectSelection(previous,selected,next,forced=[]){
  const covered=f=>{let end=f.start;for(const r of ranges){if(r.end<=end)continue;if(r.start>end)break;end=Math.max(end,r.end);if(end>=f.end)return true;}return false;};
  return new Set(next.findings.filter(covered).map(f=>f.id));
 }
-export function copyIsReady(complete,locked,contexts,decisions){return !!complete&&!locked&&pendingContexts(contexts,decisions).length===0;}
+export function copyIsReady(complete,locked,contexts,decisions,review=null,selected=null){return !!complete&&!locked&&pendingContexts(contexts,decisions).length===0&&(!review||!selected||contexts.every(c=>decisions.get(contextKey(c))!=='hide'||contextState(review,selected,c)));}

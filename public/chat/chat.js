@@ -1,10 +1,10 @@
-import {fullReview,fullMessage,GENERALIZATIONS} from './full.mjs?v=full1';
-import {standardReview} from './standard.mjs?v=full1';
-import {TYPES,partitionReview,abstractMessage,addAbstractionManual} from './abstraction.mjs?v=full1';
-import * as semanticDetector from './local-detector.mjs?v=full1';
-import * as piiDetector from './pii-detector.mjs?v=full1';
-import {restoreText,applyIdentityLinks,mergePIICandidates} from './pii-core.mjs?v=full1';
-import {personalReview,selectContext,contextState,contextKey,pendingContexts,projectSelection,copyIsReady} from './check-review.mjs?v=full1';
+import {fullReview,fullMessage,GENERALIZATIONS} from './full.mjs?v=boundary2';
+import {standardReview} from './standard.mjs?v=boundary2';
+import {TYPES,partitionReview,abstractMessage,addAbstractionManual} from './abstraction.mjs?v=boundary2';
+import * as semanticDetector from './local-detector.mjs?v=boundary2';
+import * as piiDetector from './pii-detector.mjs?v=boundary2';
+import {restoreText,applyIdentityLinks,mergePIICandidates} from './pii-core.mjs?v=boundary2';
+import {personalReview,selectContext,contextState,contextKey,pendingContexts,projectSelection,copyIsReady} from './check-review.mjs?v=boundary2';
 const $=s=>document.querySelector(s),input=$('#messageInput');
 let review=null,baseReview=null,contexts=[],selected=new Set(),mapping=[],links=[],manualRanges=[],busy=false,complete=false,generation=0,preparing=false,composing=false,session='';
 let contextDecisions=new Map(),preparationEpoch=0;
@@ -28,7 +28,7 @@ function controls(){
   $('#prepareLocalAI').disabled=locked||ready()||mode()==='rules';
   $('#prepareLocalAI').textContent=ready()?'準備完了':preparing?'準備しています…':'先に準備する';
   $('#modelState').textContent=preparing?'端末内AI：準備中':mode()==='rules'?'ルールのみ（AIは未実行）':'個人情報AI：'+(piiDetector.isReady()?'準備完了':'未準備')+(withContext()?' ／ 機密情報AI：'+(semanticDetector.isReady()?'準備完了':'未準備'):'');
-  $('#copyButton').disabled=!review||!copyIsReady(complete,locked,contexts,contextDecisions);
+  $('#copyButton').disabled=!review||!copyIsReady(complete,locked,contexts,contextDecisions,review,selected);
   $('#selectAll').disabled=!complete||!review?.findings.length;$('#selectNone').disabled=!complete||!review?.findings.length;
   for(const id of ['manualAdd','manualPhrase','aliasAdd','aliasPhrase','aliasTarget'])$('#'+id).disabled=!complete;
   $('#aliasClear').disabled=!complete||!links.length;
@@ -130,6 +130,6 @@ $('#manualAdd').onclick=()=>{if(!complete)return;try{const phrase=$('#manualPhra
 $('#aliasAdd').onclick=()=>{try{const target=baseReview.findings.find(f=>f.id===$('#aliasTarget').value);if(!target)throw Error('検出した人物・組織を選んでください。');const next=[...links,{alias:$('#aliasPhrase').value,target:target.text,kind:target.kind}];const extra=applyIdentityLinks(baseReview,next);const nextReview=partitionReview(baseReview,[...manualRanges,...extra]);selected=projectSelection(review,selected,nextReview,extra);review=nextReview;links=next;newSession();$('#aliasLinks').replaceChildren();for(const l of links){const li=document.createElement('li');li.textContent=l.alias+' → '+l.target+' と同じラベル';$('#aliasLinks').append(li);}$('#aliasPhrase').value='';$('#aliasError').textContent='';render();}catch(e){$('#aliasError').textContent=e.message;}};
 $('#aliasClear').onclick=()=>{links=[];const nextReview=partitionReview(baseReview,manualRanges);selected=projectSelection(review,selected,nextReview);review=nextReview;newSession();$('#aliasLinks').replaceChildren();render();};
 async function copy(text,status){const version=session;try{await navigator.clipboard.writeText(text);if(version!==session)return;$('#'+status).textContent='コピーしました。貼り付け先でも内容をご確認ください。';}catch{$('#'+status).textContent='自動コピーが使えません。文章を選択して ⌘ / Ctrl＋C でコピーしてください。';}}
-$('#copyButton').onclick=()=>{if(review&&copyIsReady(complete,busy||preparing,contexts,contextDecisions))void copy(output().text,'copyStatus');};
+$('#copyButton').onclick=()=>{if(review&&copyIsReady(complete,busy||preparing,contexts,contextDecisions,review,selected))void copy(output().text,'copyStatus');};
 $('#responseInput').oninput=()=>{$('#restoredOutput').value='';$('#restoreStatus').textContent=$('#responseInput').value.length>20000?'復元できる回答は20,000文字までです。文章は切り捨てていません。':'';$('#copyRestored').disabled=true;controls();};$('#restoreButton').onclick=()=>{try{const r=restoreText($('#responseInput').value,mapping);$('#restoredOutput').value=r.text;$('#restoreStatus').textContent=r.unknown.length?'現在の置換表と一致しないラベルが'+r.unknown.length+'種類あります。元に戻さず残しています。':r.restored?r.restored+'箇所を端末内で復元しました。内容をご確認ください。':'一致するラベルがありません。別の文章の回答や、AIが書き換えたラベルは復元できません。';$('#copyRestored').disabled=!r.restored||!!r.unknown.length;}catch(e){$('#restoreStatus').textContent=e.message;}};$('#copyRestored').onclick=()=>{if(!$('#copyRestored').disabled)void copy($('#restoredOutput').value,'restoreStatus');};
 $('#aboutButton').onclick=()=>$('#aboutDialog').showModal();$('#closeAbout').onclick=()=>$('#aboutDialog').close();newSession();controls();

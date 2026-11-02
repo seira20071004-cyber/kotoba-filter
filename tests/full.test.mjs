@@ -48,3 +48,5 @@ test('顧客に関する検査や確認工程を省く具体的な方針を保�
 test('具体的な非公開の取引合意や、顧客の健康・家庭の事情を候補にする',()=>{for(const raw of ['先方とは他の代理店には知らせない独占の約束をしています。どのように返信すればよいですか？','顧客は健康診断で病気が判明し治療中です。対応方法を教えてください。']){const r=protect(raw);assert(r.text.includes('非公開情報'));assert(!r.text.includes('独占の約束'));assert(!r.text.includes('治療中'));}});
 
 test('具体的な取引先の事情がない一般論・定義の質問を機密文にしない',()=>{for(const raw of ['独占契約とは何ですか？','特別な取引条件の一般的な決め方を教えてください。'])assert.equal(fullReview(personalReview(raw)).contexts.length,0,raw);});
+test('隣接する同種の機密候補も個別の境界を保ち、両方を保護できる',()=>{const raw='独占契約を結んでいます。優先供給の約束をしています。',r=protect(raw);assert.equal(r.contexts.length,2);assert.equal(r.review.findings.length,2);assert(r.contexts.every(c=>r.review.findings.some(f=>f.start===c.start&&f.end===c.end)));assert(!r.text.includes('独占契約'));assert(!r.text.includes('優先供給'));});
+test('PII・日付で分割された機密文と隣の機密文を選択しても秘密の後半が残らない',()=>{const raw='社外秘ですが、来年撤退する予定はありません。取引先へ継続を伝える文面を考えてください。',r=protect(raw);assert(!r.text.includes('撤退する予定'));});

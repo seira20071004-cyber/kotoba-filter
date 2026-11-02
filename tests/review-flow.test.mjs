@@ -23,3 +23,4 @@ test('GPU探索中に準備を中止しても、後からWorkerを起動しな�
  }
  assert.equal(created,0);
 });
+test('隠すと確認した範囲が実際に選択されていなければコピーを無効にする',()=>{const c={start:0,end:4},review={original:'秘密情報',findings:[{id:'f',start:0,end:4}]},decisions=new Map([['0:4','hide']]);assert.equal(copyIsReady(true,false,[c],decisions,review,new Set()),false);assert.equal(copyIsReady(true,false,[c],decisions,review,new Set(['f'])),true);});
