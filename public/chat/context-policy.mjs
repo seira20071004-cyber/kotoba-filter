@@ -1,4 +1,4 @@
-import {unitsFor} from './confidential.mjs?v=contacts3';
+import {unitsFor} from './confidential.mjs?v=standard2';
 // Narrow intent/scope checks, not a blanket exemption for words such as "fiction".
 const privateCue=/社外秘|極秘|未公表|未公開|未発表|口外禁止|NDA|秘密保持|内々|水面下|社内限り|外には出せない|まだ.{0,16}(?:公表|発表|伝えていな)/iu;
 const realAnchor=/実際|現実|弊社|当社|自社|社内|顧客|取引先|従業員|社員|人事|査定|基本給|認証|管理画面|パスワード|API.?キー|アクセストークン|本番/u;

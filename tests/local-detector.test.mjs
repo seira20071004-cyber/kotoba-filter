@@ -9,3 +9,9 @@ test('モデル準備中の中止もWorkerを終了し、準備完了やコピ�
  globalThis.Worker=WaitingWorker;t.after(()=>{Object.defineProperty(globalThis,'navigator',nav);globalThis.Worker=oldWorker;});
  const detector=await import('../public/chat/local-detector.mjs?cancel-prepare-test');const preparation=detector.prepare().catch(e=>e);await loadingStarted;detector.cancelChecks();const error=await preparation;assert.match(error.message,/中止/);assert.equal(detector.isReady(),false);assert(instance.terminated);await assert.rejects(()=>detector.analyze('未公開の計画です。'),/準備/);
 });
+test('具体値抽出Workerの全単位を検証し、不正な文IDでは完了させない',async t=>{
+ const nav=Object.getOwnPropertyDescriptor(globalThis,'navigator'),oldWorker=globalThis.Worker;let instance;
+ Object.defineProperty(globalThis,'navigator',{value:{gpu:{requestAdapter:async()=>({})}},configurable:true});
+ class ValueWorker{constructor(){instance=this;}postMessage(data){if(data.type==='load')queueMicrotask(()=>this.onmessage({data:{id:data.id,result:true}}));else if(data.type==='extract')queueMicrotask(()=>this.onmessage({data:{id:data.id,result:{decisions:this.invalid?{}:Object.fromEntries(data.units.map(u=>[u.id,{status:'review',values:[{quote:'300万円',type:'amount'}]}]))}}}));}terminate(){this.terminated=true;}}
+ globalThis.Worker=ValueWorker;t.after(()=>{Object.defineProperty(globalThis,'navigator',nav);globalThis.Worker=oldWorker;});const detector=await import('../public/chat/local-detector.mjs?value-contract-test');await detector.prepare();const r=await detector.analyzeValues('見積金額は300万円です。');assert.equal(r.values[0].text,'300万円');instance.invalid=true;await assert.rejects(()=>detector.analyzeValues('見積金額は300万円です。'),/すべての範囲/);assert(!detector.isReady());assert(instance.terminated);
+});

@@ -1,12 +1,13 @@
-import {TYPES,partitionReview,abstractMessage,addAbstractionManual} from './abstraction.mjs?v=contacts3';
-import * as semanticDetector from './local-detector.mjs?v=contacts3';
-import * as piiDetector from './pii-detector.mjs?v=contacts3';
-import {restoreText,applyIdentityLinks,mergePIICandidates} from './pii-core.mjs?v=contacts3';
-import {personalReview,contextCandidates,initialSelection,selectContext,contextState,contextKey,pendingContexts,projectSelection,copyIsReady} from './check-review.mjs?v=contacts3';
+import {standardReview} from './standard.mjs?v=standard2';
+import {TYPES,partitionReview,abstractMessage,addAbstractionManual} from './abstraction.mjs?v=standard2';
+import * as semanticDetector from './local-detector.mjs?v=standard2';
+import * as piiDetector from './pii-detector.mjs?v=standard2';
+import {restoreText,applyIdentityLinks,mergePIICandidates} from './pii-core.mjs?v=standard2';
+import {personalReview,selectContext,contextState,contextKey,pendingContexts,projectSelection,copyIsReady} from './check-review.mjs?v=standard2';
 const $=s=>document.querySelector(s),input=$('#messageInput');
 let review=null,baseReview=null,contexts=[],selected=new Set(),mapping=[],links=[],manualRanges=[],busy=false,complete=false,generation=0,preparing=false,composing=false,session='';
 let contextDecisions=new Map(),preparationEpoch=0;
-const withContext=()=>$('#includeConfidential').checked;
+const withContext=()=>document.querySelector('[name=protectionMode]:checked').value==='standard';
 const mode=()=>document.querySelector('[name=checkMode]:checked').value;
 const ready=()=>piiDetector.isReady()&&(!withContext()||semanticDetector.isReady());
 const newSession=()=>{session=Array.from(crypto.getRandomValues(new Uint8Array(6)),n=>n.toString(16).padStart(2,'0')).join('');$('#responseInput').value='';$('#restoredOutput').value='';$('#restoreStatus').textContent='';$('#copyRestored').disabled=true;};
@@ -28,10 +29,10 @@ function controls(){
   $('#aliasClear').disabled=!complete||!links.length;
   $('#restorePanel').hidden=!complete||!mapping.length;$('#restoreButton').disabled=!complete||!mapping.length||!$('#responseInput').value.trim()||$('#responseInput').value.length>20000;
   $('#confidentialKeywords').disabled=locked;$('#piiDevice').disabled=locked||mode()==='rules';
-  $('#includeConfidential').disabled=locked;
+  document.querySelectorAll('[name=protectionMode]').forEach(el=>el.disabled=locked);
   document.querySelectorAll('[name=checkMode]').forEach(el=>el.disabled=locked);
   $('#reviewOriginal').querySelectorAll('button').forEach(b=>b.disabled=!complete);
-  $('#contextList').querySelectorAll('input,button').forEach(b=>b.disabled=!complete);$('#contextHideAll').disabled=!complete;$('#contextKeepAll').disabled=!complete;
+  $('#contextList').querySelectorAll('input,button').forEach(b=>b.disabled=!complete);$('#contextHideAll').disabled=!complete||!contexts.some(c=>!c.unresolved);$('#contextKeepAll').disabled=!complete;
 }
 function invalidate({preservePreparation=false}={}){
   generation++;if(preparing&&!preservePreparation){preparationEpoch++;preparing=false;}if(!preparing){piiDetector.cancelChecks();semanticDetector.cancelChecks();}review=null;baseReview=null;contexts=[];links=[];manualRanges=[];mapping=[];contextDecisions.clear();selected.clear();complete=false;busy=false;newSession();
@@ -46,29 +47,30 @@ function preview(){
   for(const m of mapping){const key=m.original+'|'+m.replacement;if(seen.has(key))continue;seen.add(key);const li=document.createElement('li'),heading=document.createElement('strong'),why=document.createElement('p');heading.textContent=m.original+' → '+m.replacement;why.textContent='理由：'+m.reason;li.append(heading,why);map.append(li);}
   $('#selectionCount').textContent=selected.size+' / '+review.findings.length+'箇所を置換';$('#unselectedWarning').hidden=selected.size===review.findings.length;$('#copyStatus').textContent='';
   $('#reviewOriginal').querySelectorAll('[data-finding]').forEach(b=>{const active=selected.has(b.dataset.finding);b.setAttribute('aria-pressed',String(active));b.classList.toggle('selected',active);});
-  $('#contextList').querySelectorAll('input').forEach((box,i)=>{const c=contexts[i],key=contextKey(c),hidden=contextState(review,selected,c);box.checked=hidden;const status=$('#contextStatus'+i);status.textContent=!contextDecisions.has(key)?'選択待ち':hidden?'隠す選択済み':'内容を残す選択済み';status.classList.toggle('pending',!contextDecisions.has(key));});
-  const remaining=contexts.filter(c=>!contextState(review,selected,c)).length;
+  $('#contextList').querySelectorAll('input').forEach(box=>{const c=contexts[Number(box.dataset.contextIndex)];box.checked=contextState(review,selected,c);});
+  contexts.forEach((c,i)=>{const key=contextKey(c),status=$('#contextStatus'+i),hidden=!c.unresolved&&contextState(review,selected,c);if(!status)return;status.textContent=!contextDecisions.has(key)?'選択待ち':c.unresolved?'原文・手動指定を確認済み':hidden?'隠す選択済み':'内容を残す選択済み';status.classList.toggle('pending',!contextDecisions.has(key));});
+  const remaining=contexts.filter(c=>c.unresolved||!contextState(review,selected,c)).length;
   const pending=pendingContexts(contexts,contextDecisions).length;$('#reviewProgress').textContent=!complete?'チェック中です。':pending?'機密候補'+pending+'件の扱いを選ぶとコピーできます。':remaining?'選択済みです。内容を残した機密候補が'+remaining+'件あります。':'コピー前に加工文をご確認ください。';$('#copyButton').textContent=pending?'機密候補を確認してください':'文章をコピー';
-  $('#contextSelection').textContent=pending?'未確認が'+pending+'件あります。「隠す」か「内容を残す」を選んでください。':remaining?remaining+'件の機密候補は一部または全体が原文のまま残ります。開示してよいか確認してください。':'機密候補はすべて置換対象に選ばれています。';
+  $('#contextSelection').textContent=pending?'未確認が'+pending+'件あります。具体値の置換、手動指定、または原文を残すことを確認してください。':remaining?remaining+'件の機密候補は一部または全体が原文のまま残ります。開示してよいか確認してください。':'機密候補はすべて置換対象に選ばれています。';
   controls();
 }
 function render(){
   if(!review)return;$('#emptyResult').hidden=true;$('#resultContent').hidden=false;
   const area=$('#reviewOriginal');area.replaceChildren();let cursor=0;
-  for(const f of review.findings){area.append(document.createTextNode(review.original.slice(cursor,f.start)));const b=document.createElement('button');b.type='button';b.className='privacy-mark';b.dataset.finding=f.id;b.textContent=f.text;b.title=f.sources.join('＋')+'：'+TYPES[f.kind].label;b.setAttribute('aria-label',b.title+'：'+f.text+'。選択して置換する');b.onclick=()=>{if(!complete)return;newSession();selected.has(f.id)?selected.delete(f.id):selected.add(f.id);for(const c of contexts)if(c.start<f.end&&f.start<c.end)contextDecisions.set(contextKey(c),'custom');preview();};area.append(b);cursor=f.end;}
+  for(const f of review.findings){area.append(document.createTextNode(review.original.slice(cursor,f.start)));const b=document.createElement('button');b.type='button';b.className='privacy-mark';b.dataset.finding=f.id;b.textContent=f.text;b.title=f.sources.join('＋')+'：'+TYPES[f.kind].label;b.setAttribute('aria-label',b.title+'：'+f.text+'。選択して置換する');b.onclick=()=>{if(!complete)return;newSession();selected.has(f.id)?selected.delete(f.id):selected.add(f.id);for(const c of contexts)if(!c.unresolved&&c.start<f.end&&f.start<c.end)contextDecisions.set(contextKey(c),'custom');preview();};area.append(b);cursor=f.end;}
   area.append(document.createTextNode(review.original.slice(cursor)));
-  $('#resultSummary').textContent=!complete?'選んだチェックを実行中です。完了するまでコピーはできません。':review.findings.length?(withContext()?'機密候補は'+contexts.length+'件です。個人情報は初期選択し、機密候補を隠すかは本人が選びます。':'個人情報の候補を初期選択しました。原文と加工文を確認してください。'):'候補は見つかりませんでした。個人情報・機密情報がないという保証ではありません。';
+  $('#resultSummary').textContent=!complete?'選んだチェックを実行中です。完了するまでコピーはできません。':(review.findings.length||contexts.length)?(withContext()?'説明や立場は残し、具体値だけを置換します。候補・要確認は'+contexts.length+'件です。理由と加工文をご確認ください。':'個人情報の候補を初期選択しました。原文と加工文を確認してください。'):'候補は見つかりませんでした。個人情報・機密情報がないという保証ではありません。';
   const reasons=$('#findingReasons');reasons.replaceChildren();for(const f of review.findings){const li=document.createElement('li');li.textContent=f.sources.join('＋')+'：'+TYPES[f.kind].label;reasons.append(li);}
   $('#contextReview').hidden=!withContext()||!contexts.length;
   const list=$('#contextList');list.replaceChildren();
   contexts.forEach((c,i)=>{
     const li=document.createElement('li'),label=document.createElement('label'),box=document.createElement('input'),title=document.createElement('strong'),quote=document.createElement('blockquote'),why=document.createElement('p'),source=document.createElement('small'),keep=document.createElement('button'),status=document.createElement('span');
-    box.type='checkbox';box.id='contextChoice'+i;box.setAttribute('aria-label','機密候補'+(i+1)+'を隠す');title.textContent='この範囲を隠す';label.append(box,title);
-    quote.textContent=review.original.slice(c.start,c.end);why.textContent='確認する理由：'+c.reason;source.textContent='検出元：'+c.sources.join('＋')+' ／ 機密性を断定するものではありません。';
-    keep.type='button';keep.className='secondary';keep.textContent='内容を残す';keep.setAttribute('aria-label','機密候補'+(i+1)+'の内容を残す');status.id='contextStatus'+i;status.className='decision-status';
+    box.type='checkbox';box.dataset.contextIndex=String(i);box.id='contextChoice'+i;box.setAttribute('aria-label','機密候補'+(i+1)+'を隠す');title.textContent=c.unresolved?'具体値を切り出せなかった箇所':'この具体値を隠す';if(c.unresolved)label.append(title);else label.append(box,title);
+    quote.textContent=review.original.slice(c.start,c.end);why.textContent='確認する理由：'+c.reason+(c.unresolved?' この欄では自動で文全体を隠しません。':'');source.textContent='検出元：'+c.sources.join('＋')+' ／ 機密性を断定するものではありません。';
+    keep.type='button';keep.className='secondary';keep.textContent=c.unresolved?'原文が残ることを確認して続ける':'内容を残す';keep.setAttribute('aria-label','機密候補'+(i+1)+'の内容を残す');status.id='contextStatus'+i;status.className='decision-status';
     box.onchange=()=>{if(!complete)return;selected=selectContext(review,selected,c,box.checked);contextDecisions.set(contextKey(c),box.checked?'hide':'keep');newSession();preview();};
-    keep.onclick=()=>{if(!complete)return;selected=selectContext(review,selected,c,false);contextDecisions.set(contextKey(c),'keep');newSession();preview();};
-    const actions=document.createElement('div');actions.className='decision-actions';actions.append(keep,status);li.append(label,quote,why,source,actions);list.append(li);
+    keep.onclick=()=>{if(!complete)return;if(!c.unresolved)selected=selectContext(review,selected,c,false);contextDecisions.set(contextKey(c),'keep');newSession();preview();};
+    const actions=document.createElement('div');actions.className='decision-actions';if(c.unresolved){const manual=document.createElement('button');manual.type='button';manual.className='secondary';manual.textContent='隠す語句を手動で指定';manual.onclick=()=>{$('#manualPhrase').closest('details').open=true;$('#manualPhrase').focus();};actions.append(manual);}actions.append(keep,status);li.append(label,quote,why,source,actions);list.append(li);
   });
   preview();
 }
@@ -95,31 +97,30 @@ async function check(){
       review=partitionReview(mergePIICandidates(review,result.findings));
     }
     if(withContext()){
-      let extra=[];
+      let extracted={values:[],unresolved:[]};
       if(mode()==='ai'){
         method('個人情報の確認済み · 機密情報を端末内AIで確認しています…',true);render();
         if(!semanticDetector.isReady())await prepareModel('context',id);if(id!==generation)return;
-        const result=await semanticDetector.analyze(review.original,[],text=>{if(id===generation)method('機密情報：'+text,true);});if(id!==generation)return;extra=result.findings;
+        const result=await semanticDetector.analyzeValues(review.original,text=>{if(id===generation)method('機密情報：'+text,true);});if(id!==generation)return;extracted=result;
       }
-      contexts=contextCandidates(review.original,extra,review);
-      review=partitionReview(review,contexts);
+      const standard=standardReview(review,extracted);contexts=standard.contexts;review=standard.review;
     }
     if(id!==generation)return;
-    method(mode()==='ai'?'個人情報：'+piiDescription()+(withContext()?' ／ 機密情報：端末内AI＋ルール':' ／ 機密情報チェック：オフ')+'。見落とし・誤検出は残ります。':'ルールのみで確認しました。'+(withContext()?'機密情報は明示された非公開指定のみを確認し、文脈AIは未実行です。':'機密情報チェックはオフです。')+'端末内AIは実行していません。');
-    baseReview=review;selected=initialSelection(review);complete=true;$('#resultBadge').textContent='チェック完了';$('#localModelStatus').textContent=mode()==='ai'?'確認完了：'+piiDescription()+(withContext()?' ＋ 機密情報AI（GPU）':''):'ルールのみで確認しました。';aliasOptions();render();
-  }catch(e){if(id!==generation)return;complete=false;$('#resultBadge').textContent='確認が完了していません';method('選んだ確認を完了できませんでした。コピーは無効です。',true);error(e.message+(withContext()?' 機密情報チェックをオフにして再チェックするか、「ルールのみ」を選べます。':' 「ルールのみ」を選んで再チェックすることもできます。'));}
+    method(mode()==='ai'?'個人情報：'+piiDescription()+(withContext()?' ／ スタンダード：端末内AI＋ルールで具体値を抽出':' ／ ライト：個人情報の値のみ')+'。見落とし・誤検出は残ります。':'ルールのみで確認しました。'+(withContext()?'スタンダードの具体値をルールで抽出しました。文脈AIは未実行のため、見落としが増える可能性があります。':'ライトの個人情報のみを確認しました。')+'端末内AIは実行していません。');
+    baseReview=review;selected=new Set(review.findings.filter(f=>TYPES[f.kind].rank===1).map(f=>f.id));complete=true;$('#resultBadge').textContent='チェック完了';$('#localModelStatus').textContent=mode()==='ai'?'確認完了：'+piiDescription()+(withContext()?' ＋ 機密情報AI（GPU）':''):'ルールのみで確認しました。';aliasOptions();render();
+  }catch(e){if(id!==generation)return;complete=false;$('#resultBadge').textContent='確認が完了していません';method('選んだ確認を完了できませんでした。コピーは無効です。',true);error(e.message+(withContext()?' ライトに切り替えて再チェックするか、「ルールのみ」を選べます。':' 「ルールのみ」を選んで再チェックすることもできます。'));}
   finally{if(id===generation){busy=false;controls();}}
 }
-$('#contextHideAll').onclick=()=>{if(!complete)return;for(const c of contexts){selected=selectContext(review,selected,c,true);contextDecisions.set(contextKey(c),'hide');}newSession();preview();};
-$('#contextKeepAll').onclick=()=>{if(!complete)return;for(const c of contexts){selected=selectContext(review,selected,c,false);contextDecisions.set(contextKey(c),'keep');}newSession();preview();};
+$('#contextHideAll').onclick=()=>{if(!complete)return;for(const c of contexts.filter(c=>!c.unresolved)){selected=selectContext(review,selected,c,true);contextDecisions.set(contextKey(c),'hide');}newSession();preview();};
+$('#contextKeepAll').onclick=()=>{if(!complete)return;for(const c of contexts){if(!c.unresolved)selected=selectContext(review,selected,c,false);contextDecisions.set(contextKey(c),'keep');}newSession();preview();};
 $('#checkButton').onclick=check;$('#cancelCheck').onclick=()=>{invalidate();$('#resultBadge').textContent='確認を中止しました';};input.addEventListener('input',()=>invalidate({preservePreparation:true}));input.addEventListener('compositionstart',()=>composing=true);input.addEventListener('compositionend',()=>composing=false);input.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&!e.isComposing&&!composing&&e.keyCode!==229){e.preventDefault();void check();}});
 $('#confidentialKeywords').addEventListener('input',invalidate);document.querySelectorAll('[name=checkMode]').forEach(el=>el.onchange=invalidate);
-$('#includeConfidential').onchange=()=>{invalidate();$('#contextHelp').textContent=withContext()?'未公開の計画や社内事情などを、文章の文脈から確認します。候補は理由を見て隠すか選べます。文脈AIはWebGPU対応環境が必要です。':'名前・住所・連絡先などを確認します。機密情報の文脈チェックは行いません。';};
+document.querySelectorAll('[name=protectionMode]').forEach(el=>el.onchange=()=>{invalidate();$('#contextHelp').textContent=withContext()?'機密の具体値を抽出し、説明や立場を残します。候補には理由を表示します。AI抽出にはWebGPUが必要です。':'名前・住所・連絡先などを確認します。機密の具体値は確認しません。';});
 $('#piiDevice').onchange=()=>{piiDetector.reset();invalidate();$('#localModelStatus').textContent='個人情報AIの実行環境を変更しました。再準備してチェックしてください。';};
 $('#clearAllData').onclick=()=>{input.value='';$('#confidentialKeywords').value='';invalidate();$('#resultBadge').textContent='画面のデータを消去しました';$('#localModelStatus').textContent='画面のデータを消去しました。クリップボードとモデルキャッシュは残ります。';input.focus();};
 $('#clearButton').onclick=()=>{input.value='';invalidate();$('#resultBadge').textContent='まだチェックしていません';input.focus();};
-$('#sampleButton').onclick=()=>{if(input.value&&!confirm('入力中の文章をサンプルに置き換えますか？'))return;input.value=withContext()?'担当は山田太郎、メールはtaro@example.comです。来月、まだ発表していない新製品を発売する予定です。週末は映画を見ます。':'担当は山田太郎です。山田さんに返信してください。彼のメールはtaro@example.com、電話は090-0000-0000です。週末は映画を見ます。';invalidate();input.focus();};
-$('#prepareLocalAI').onclick=()=>void prepare();$('#selectAll').onclick=()=>{if(!complete)return;newSession();selected=new Set(review.findings.map(f=>f.id));for(const c of contexts)contextDecisions.set(contextKey(c),'hide');preview();};$('#selectNone').onclick=()=>{newSession();selected.clear();for(const c of contexts)contextDecisions.set(contextKey(c),'keep');preview();};
+$('#sampleButton').onclick=()=>{if(input.value&&!confirm('入力中の文章をサンプルに置き換えますか？'))return;input.value=withContext()?'担当者名：山田 太郎\n電話番号は090(0000)0001です。\nここからが社外秘です。\n見積金額は300万円、値引率は28%です。注文番号はORD-2027-042です。\n新製品名はミラージュで、発売予定日は2027年4月1日です。支払条件は翌月末払いです。\n週末は映画を見ます。':'担当は山田太郎です。山田さんに返信してください。彼のメールはtaro@example.com、電話は090-0000-0000です。週末は映画を見ます。';invalidate();input.focus();};
+$('#prepareLocalAI').onclick=()=>void prepare();$('#selectAll').onclick=()=>{if(!complete)return;newSession();selected=new Set(review.findings.map(f=>f.id));for(const c of contexts.filter(c=>!c.unresolved))contextDecisions.set(contextKey(c),'hide');preview();};$('#selectNone').onclick=()=>{newSession();selected.clear();for(const c of contexts.filter(c=>!c.unresolved))contextDecisions.set(contextKey(c),'keep');preview();};
 $('#manualAdd').onclick=()=>{if(!complete)return;try{const phrase=$('#manualPhrase').value;const r=addAbstractionManual(review,selected,phrase);let p=0;while((p=review.original.indexOf(phrase,p))>=0){manualRanges.push({start:p,end:p+phrase.length,kind:'manual',labels:['本人が追加した非表示箇所'],sources:['手動']});p+=phrase.length;}review=r.review;selected=r.selected;newSession();$('#manualPhrase').value='';$('#manualError').textContent='';render();}catch(e){$('#manualError').textContent=e.message;}};
 $('#aliasAdd').onclick=()=>{try{const target=baseReview.findings.find(f=>f.id===$('#aliasTarget').value);if(!target)throw Error('検出した人物・組織を選んでください。');const next=[...links,{alias:$('#aliasPhrase').value,target:target.text,kind:target.kind}];const extra=applyIdentityLinks(baseReview,next);const nextReview=partitionReview(baseReview,[...manualRanges,...extra]);selected=projectSelection(review,selected,nextReview,extra);review=nextReview;links=next;newSession();$('#aliasLinks').replaceChildren();for(const l of links){const li=document.createElement('li');li.textContent=l.alias+' → '+l.target+' と同じラベル';$('#aliasLinks').append(li);}$('#aliasPhrase').value='';$('#aliasError').textContent='';render();}catch(e){$('#aliasError').textContent=e.message;}};
 $('#aliasClear').onclick=()=>{links=[];const nextReview=partitionReview(baseReview,manualRanges);selected=projectSelection(review,selected,nextReview);review=nextReview;newSession();$('#aliasLinks').replaceChildren();render();};

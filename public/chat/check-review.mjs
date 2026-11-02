@@ -1,6 +1,6 @@
-import {refineContextFindings,contextualRiskRules} from './context-policy.mjs?v=contacts3';
-import {abstractionReview,partitionReview,TYPES} from './abstraction.mjs?v=contacts3';
-import {mergeReview,contextRuleFindings,CATEGORY_REASONS} from './confidential.mjs?v=contacts3';
+import {refineContextFindings,contextualRiskRules} from './context-policy.mjs?v=standard2';
+import {abstractionReview,partitionReview,TYPES} from './abstraction.mjs?v=standard2';
+import {mergeReview,contextRuleFindings,CATEGORY_REASONS} from './confidential.mjs?v=standard2';
 
 // Business figures, roles and contextual warnings are never selected as PII.
 export function personalReview(original,keywords=[]){
@@ -24,7 +24,7 @@ export function selectContext(review,selected,candidate,hide){
   for(const f of review.findings){
     if(f.start>=candidate.start&&f.end<=candidate.end){
       if(hide)next.add(f.id);
-      else if(f.kind==='confidential')next.delete(f.id);
+      else if(TYPES[f.kind].rank>1)next.delete(f.id);
     }
   }
   return next;
