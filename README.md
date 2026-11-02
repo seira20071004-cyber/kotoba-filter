@@ -67,3 +67,6 @@ npm run build
 
 個人情報Workerは `npm run pii:prepare`、機密確認Workerは `npm run local-ai:prepare` で再生成します。`npm run build` / `npm run dev` / `npm run dev:local` の前にも自動生成します。GitHubのソースには生成済みWorkerを含めず、`worker/` 配下のソースと固定依存関係から生成します。Transformers.js、ONNX Runtime、WebLLMのライセンスは同じフォルダーに含めています。
 GitHubへのpushとSitesへのデプロイは別です。Sitesの既存DBスキーマは破壊的な削除をせず保持しますが、このツールではDBへ読み書きしません。
+
+
+フルセキュアの改善と限界・実測結果は [検証報告](docs/FULL_IMPROVEMENT_2026-11-02.md) を参照してください。開発用68例の成績を未知の文章の安全保証として扱わないでください。

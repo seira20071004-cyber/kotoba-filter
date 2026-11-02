@@ -1,0 +1,356 @@
+{
+  "method": "browser-recorded",
+  "summary": {
+    "positive": 16,
+    "protectedAll": 8,
+    "negative": 8,
+    "falseAltered": 5,
+    "total": 24,
+    "requestKept": 19,
+    "both": 5,
+    "targets": 21,
+    "targetsCovered": 11
+  },
+  "rows": [
+    {
+      "id": "P01",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "高橋 美咲",
+          "covered": true
+        },
+        {
+          "text": "０８０（００００）０００２",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "担当者名：[人物1_ff91b4a43b9a]\n電話番号は[電話1_ff91b4a43b9a]です。返信文を作ってください。"
+    },
+    {
+      "id": "P02",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "月末の引き落としをまかなえません",
+          "covered": false
+        }
+      ],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "うちの口座残高では月末の引き落としをまかなえません。支払い先への説明文を考えてください。"
+    },
+    {
+      "id": "P03",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "既存客にだけ返金保証を付けます",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": false,
+      "both": false,
+      "altered": true,
+      "output": "[非公開情報1_12100bcdbd1f]"
+    },
+    {
+      "id": "P04",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "72度で18分攪拌すること",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": false,
+      "both": false,
+      "altered": true,
+      "output": "[非公開情報1_2a4a7c4d8461]"
+    },
+    {
+      "id": "P05",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "双極性障害だと打ち明けられました",
+          "covered": false
+        }
+      ],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "一緒に働く人から双極性障害だと打ち明けられました。仕事量の調整方法を教えてください。"
+    },
+    {
+      "id": "P06",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "県内に一社しかない工房",
+          "covered": false
+        },
+        {
+          "text": "代表の甥",
+          "covered": false
+        },
+        {
+          "text": "従業員は二人",
+          "covered": false
+        }
+      ],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "相手は県内に一社しかない工房です。代表の甥が窓口です。従業員は二人です。契約の確認項目を教えてください。"
+    },
+    {
+      "id": "P07",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "利用者番号を書き換えるだけで別の人の注文履歴も開けてしまいます",
+          "covered": false
+        }
+      ],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "利用者番号を書き換えるだけで別の人の注文履歴も開けてしまいます。修正の優先順位を教えてください。"
+    },
+    {
+      "id": "P08",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "納品後90日払い",
+          "covered": true
+        },
+        {
+          "text": "875,000円",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "取引条件は[機密値1_af03d907cecc]です。見積額は[金額等1_af03d907cecc]です。値上げの伝え方を教えてください。"
+    },
+    {
+      "id": "P09",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "市内唯一の古楽器専門店",
+          "covered": true
+        },
+        {
+          "text": "社長の妻",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": false,
+      "both": false,
+      "altered": true,
+      "output": "特定につながる詳しい背景は省略します。[非公開情報1_7420d2f96d35]"
+    },
+    {
+      "id": "P10",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "来年撤退する予定はありません",
+          "covered": false
+        }
+      ],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": true,
+      "output": "[非公開情報1_a33a4399f7ea]撤退する予定はありません。取引先へ継続を伝える文面を考えてください。"
+    },
+    {
+      "id": "P11",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "synthetic_demo_secret_987654",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "api_key: [認証情報1_c30c82d9aae9]\nエラーの原因を切り分ける手順を教えてください。"
+    },
+    {
+      "id": "P12",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "離婚の話し合いをしており借金もあります",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_800e5f2458d0]予約変更の返信案を考えてください。"
+    },
+    {
+      "id": "A01",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "来週に買収交渉を始めます",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "これは架空の物語です。[非公開情報1_16a86eae48b8]対外説明の準備事項を教えてください。"
+    },
+    {
+      "id": "A02",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "入札の前に落札者を決めてあります",
+          "covered": false
+        }
+      ],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "一般的な注意点を教えてください。実際の取引先とは入札の前に落札者を決めてあります。今後の対応を相談したいです。"
+    },
+    {
+      "id": "A03",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "顧客は今月から透析を受けています",
+          "covered": false
+        }
+      ],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": true,
+      "output": "どう対応すればよいですか、顧客は[日付等1_7fa02692513f]から透析を受けています。"
+    },
+    {
+      "id": "A04",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "逮捕されたため",
+          "covered": false
+        }
+      ],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": true,
+      "output": "関係者が逮捕されたため担当者が変わります。請求書の宛先変更を伝える文面を作ってください。"
+    },
+    {
+      "id": "N01",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "週末は水族館に行って写真を撮りました。写真につける短いコメントを考えてください。"
+    },
+    {
+      "id": "N02",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "これは架空の物語です。市内唯一の専門店が来月閉店する予定です。物語の続きを考えてください。"
+    },
+    {
+      "id": "N03",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": true,
+      "output": "特定につながる詳しい背景は省略します。記事の見出しを考えてください。"
+    },
+    {
+      "id": "N04",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": true,
+      "output": "[非公開情報1_19481adc0ea1]通常営業の案内を短くしてください。"
+    },
+    {
+      "id": "N05",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "業務委託契約の一般的な確認方法を教えてください。"
+    },
+    {
+      "id": "N06",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": false,
+      "both": false,
+      "altered": true,
+      "output": "[非公開情報1_2b9f2896a80a]"
+    },
+    {
+      "id": "N07",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": false,
+      "both": false,
+      "altered": true,
+      "output": "今日はオンラインで打ち合わせをしました。[非公開情報1_aefbf968d190]"
+    },
+    {
+      "id": "N08",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": true,
+      "output": "[非公開情報1_632800c86039]この注意書きを読みやすくしてください。"
+    }
+  ]
+}

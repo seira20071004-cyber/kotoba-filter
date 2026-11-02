@@ -1,0 +1,166 @@
+{
+  "method": "browser-recorded",
+  "summary": {
+    "positive": 6,
+    "protectedAll": 1,
+    "negative": 6,
+    "falseAltered": 0,
+    "total": 12,
+    "requestKept": 11,
+    "both": 1,
+    "targets": 6,
+    "targetsCovered": 1
+  },
+  "rows": [
+    {
+      "id": "U01",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "次の家賃を落とせません",
+          "covered": false
+        }
+      ],
+      "protectedAll": false,
+      "requestKept": false,
+      "both": false,
+      "altered": true,
+      "output": "今の手持ちだと次の家賃を落とせません。[人物1_0d2891ca0114]さんへの説明を考えてください。"
+    },
+    {
+      "id": "U02",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "声だけで倉庫の在庫を数えられる仕組み",
+          "covered": false
+        }
+      ],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": true,
+      "output": "うちの次作は声だけで倉庫の在庫を数えられる仕組みです。[非公開情報1_014d843041ef]紹介文の構成を考えてください。"
+    },
+    {
+      "id": "U03",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "妊娠していると面接で聞きました",
+          "covered": false
+        }
+      ],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": true,
+      "output": "採用候補者[人物1_032b2fb41cb2]と面接で聞きました。面接記録の扱いを教えてください。"
+    },
+    {
+      "id": "U04",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "刑事事件で起訴されたこと",
+          "covered": false
+        }
+      ],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "急に窓口を交代する事情は刑事事件で起訴されたことです。連絡文を作ってください。"
+    },
+    {
+      "id": "U05",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "来期は事業を売却します",
+          "covered": false
+        }
+      ],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "公表済みの資料には載っていませんが、来期は事業を売却します。案内文の構成を考えてください。"
+    },
+    {
+      "id": "U06",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "妊娠したがまだ家族には伝えていないと聞きました",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_160149d41dfb]返信案を考えてください。"
+    },
+    {
+      "id": "V01",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "公開された資料によると、このサービスは終了します。要点を整理してください。"
+    },
+    {
+      "id": "V02",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "お客さまの診断結果を他人に公開しないでください。丁寧な注意書きを作ってください。"
+    },
+    {
+      "id": "V03",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "これは架空の設定です。資金繰りに困った主人公が登場します。物語の結末を考えてください。"
+    },
+    {
+      "id": "V04",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "今日は久しぶりに本屋に寄りました。感想文の構成を考えてください。"
+    },
+    {
+      "id": "V05",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "起訴と逮捕の一般的な違いを説明してください。"
+    },
+    {
+      "id": "V06",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "秘密を守ることは大事です。新人向けの研修案を考えてください。"
+    }
+  ]
+}

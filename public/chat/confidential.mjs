@@ -1,4 +1,4 @@
-import {normalizedView,detectPrivacy} from './privacy.mjs?v=boundary2';
+import {normalizedView,detectPrivacy} from './privacy.mjs?v=fullquality3';
 export const CATEGORIES={business:'未公開の事業・製品計画',technical:'技術・製造ノウハウ',customer:'顧客・契約・取引条件',financial:'未公開の財務情報',personnel:'人事・従業員情報',legal:'法務・調査・社内事情',security:'認証・社内システム・脆弱性',personal:'文脈上の個人情報',combination:'情報の組み合わせ',other_confidential:'その他の非公開情報'};
 const exact=(o,keys)=>o&&typeof o==='object'&&!Array.isArray(o)&&Object.keys(o).sort().join(',')===keys;
 export function unitsFor(original){const v=normalizedView(original),out=[];const sentenceText=Array.from({length:v.text.length},(_,i)=>/[\r\n]/u.test(original.slice(v.starts[i],v.ends[i]))?'\n':v.text[i]).join('');for(const m of sentenceText.matchAll(/[^。！？!?\n]+[。！？!?\n]?/gu)){let start=m.index,end=start+m[0].length;while(start<end&&/\s/.test(v.text[start]))start++;while(end>start&&/\s/.test(v.text[end-1]))end--;for(let a=start;a<end;){let b=Math.min(end,a+320);if(b<end&&/[\uDC00-\uDFFF]/.test(v.text[b]))b--;out.push({id:'s'+out.length,normalizedStart:a,text:v.text.slice(a,b),start:v.starts[a],end:v.ends[b-1]});a=b;}}return out;}

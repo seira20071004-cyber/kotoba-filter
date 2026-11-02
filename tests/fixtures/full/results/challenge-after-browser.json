@@ -1,0 +1,326 @@
+[
+  {
+    "id": "U01",
+    "copyBefore": false,
+    "candidates": "この範囲を隠す\n今の手持ちだと次の家賃を落とせません。\n\n確認する理由：財務・支払能力に関する具体的な内容を検出しました。 値だけでなく内容が残る可能性があるため、この範囲を隠します。分離できた依頼部分は残しますが、相談の前提も減るため加工文を確認してください。\n\n検出元：文脈ルール ／ 機密性を断定するものではありません。\n内容を残す\n隠す選択済み",
+    "copyAfter": true,
+    "marks": [
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "marked": true,
+        "selected": true,
+        "source": "文脈ルール：機密内容の候補",
+        "text": "今の手持ちだと次の家賃を落とせません。"
+      },
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": "大家さんへの説明を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ フルセキュア：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "[非公開情報1_7ba3488654d4]大家さんへの説明を考えてください。"
+  },
+  {
+    "id": "U02",
+    "copyBefore": false,
+    "candidates": "この範囲を隠す\nうちの次作は声だけで倉庫の在庫を数えられる仕組みです。\n\n確認する理由：内部の製品・運用に関する具体的な説明に関する具体的な内容を検出しました。 値だけでなく内容が残る可能性があるため、この範囲を隠します。分離できた依頼部分は残しますが、相談の前提も減るため加工文を確認してください。\n\n検出元：文脈ルール ／ 機密性を断定するものではありません。\n内容を残す\n隠す選択済み\nこの範囲を隠す\nまだ発表前です。\n\n確認する理由：端末内AIまたは非公開指定が、この範囲を確認候補にしました。 値だけでなく内容が残る可能性があるため、この範囲を隠します。分離できた依頼部分は残しますが、相談の前提も減るため加工文を確認してください。\n\n検出元：文脈ルール ／ 機密性を断定するものではありません。\n内容を残す\n隠す選択済み",
+    "copyAfter": true,
+    "marks": [
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "marked": true,
+        "selected": true,
+        "source": "文脈ルール：機密内容の候補",
+        "text": "うちの次作は声だけで倉庫の在庫を数えられる仕組みです。"
+      },
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "marked": true,
+        "selected": true,
+        "source": "文脈ルール：機密内容の候補",
+        "text": "まだ発表前です。"
+      },
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": "紹介文の構成を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ フルセキュア：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "[非公開情報1_1a529c62ca99]紹介文の構成を考えてください。"
+  },
+  {
+    "id": "U03",
+    "copyBefore": false,
+    "candidates": "この範囲を隠す\n採用候補者が妊娠していると面接で聞きました。\n\n確認する理由：特定の人物の私的な事情に関する具体的な内容を検出しました。 値だけでなく内容が残る可能性があるため、この範囲を隠します。分離できた依頼部分は残しますが、相談の前提も減るため加工文を確認してください。\n\n検出元：文脈ルール ／ 機密性を断定するものではありません。\n内容を残す\n隠す選択済み",
+    "copyAfter": true,
+    "marks": [
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "marked": true,
+        "selected": true,
+        "source": "文脈ルール：機密内容の候補",
+        "text": "採用候補者"
+      },
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "marked": true,
+        "selected": true,
+        "source": "専用PIIモデル＋文脈ルール：人名",
+        "text": "が妊娠している"
+      },
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "marked": true,
+        "selected": true,
+        "source": "文脈ルール：機密内容の候補",
+        "text": "と面接で聞きました。"
+      },
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": "面接記録の扱いを教えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ フルセキュア：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "[非公開情報1_05b263c7243a]面接記録の扱いを教えてください。"
+  },
+  {
+    "id": "U04",
+    "copyBefore": false,
+    "candidates": "この範囲を隠す\n急に窓口を交代する事情は刑事事件で起訴されたことです。\n\n確認する理由：法務・事件の具体的な事情に関する具体的な内容を検出しました。 値だけでなく内容が残る可能性があるため、この範囲を隠します。分離できた依頼部分は残しますが、相談の前提も減るため加工文を確認してください。\n\n検出元：文脈ルール ／ 機密性を断定するものではありません。\n内容を残す\n隠す選択済み",
+    "copyAfter": true,
+    "marks": [
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "marked": true,
+        "selected": true,
+        "source": "文脈ルール：機密内容の候補",
+        "text": "急に窓口を交代する事情は刑事事件で起訴されたことです。"
+      },
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": "連絡文を作ってください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ フルセキュア：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "[非公開情報1_f0b1fc338d0b]連絡文を作ってください。"
+  },
+  {
+    "id": "U05",
+    "copyBefore": false,
+    "candidates": "この範囲を隠す\n公表済みの資料には載っていませんが、来期は事業を売却します。\n\n確認する理由：内部の製品・運用に関する具体的な説明に関する具体的な内容を検出しました。 値だけでなく内容が残る可能性があるため、この範囲を隠します。分離できた依頼部分は残しますが、相談の前提も減るため加工文を確認してください。\n\n検出元：文脈ルール ／ 機密性を断定するものではありません。\n内容を残す\n隠す選択済み",
+    "copyAfter": true,
+    "marks": [
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "marked": true,
+        "selected": true,
+        "source": "文脈ルール：機密内容の候補",
+        "text": "公表済みの資料には載っていませんが、来期は事業を売却します。"
+      },
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": "案内文の構成を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ フルセキュア：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "[非公開情報1_85dcc2b68427]案内文の構成を考えてください。"
+  },
+  {
+    "id": "U06",
+    "copyBefore": false,
+    "candidates": "この範囲を隠す\nお客さまから、妊娠したがまだ家族には伝えていないと聞きました。\n\n確認する理由：特定の人物の私的な事情に関する具体的な内容を検出しました。 値だけでなく内容が残る可能性があるため、この範囲を隠します。分離できた依頼部分は残しますが、相談の前提も減るため加工文を確認してください。\n\n検出元：文脈ルール ／ 機密性を断定するものではありません。\n内容を残す\n隠す選択済み",
+    "copyAfter": true,
+    "marks": [
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "marked": true,
+        "selected": true,
+        "source": "文脈ルール：機密内容の候補",
+        "text": "お客さまから、"
+      },
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "marked": true,
+        "selected": true,
+        "source": "専用PIIモデル＋文脈ルール：人名",
+        "text": "妊娠した"
+      },
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "marked": true,
+        "selected": true,
+        "source": "文脈ルール：機密内容の候補",
+        "text": "がまだ家族には伝えていないと聞きました。"
+      },
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": "返信案を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ フルセキュア：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "[非公開情報1_044956356fc7]返信案を考えてください。"
+  },
+  {
+    "id": "V01",
+    "copyBefore": true,
+    "candidates": "",
+    "copyAfter": true,
+    "marks": [
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": "公開された資料によると、このサービスは終了します。要点を整理してください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ フルセキュア：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "公開された資料によると、このサービスは終了します。要点を整理してください。"
+  },
+  {
+    "id": "V02",
+    "copyBefore": true,
+    "candidates": "",
+    "copyAfter": true,
+    "marks": [
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": "お客さまの診断結果を他人に公開しないでください。丁寧な注意書きを作ってください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ フルセキュア：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "お客さまの診断結果を他人に公開しないでください。丁寧な注意書きを作ってください。"
+  },
+  {
+    "id": "V03",
+    "copyBefore": true,
+    "candidates": "",
+    "copyAfter": true,
+    "marks": [
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": "これは架空の設定です。資金繰りに困った主人公が登場します。物語の結末を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ フルセキュア：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "これは架空の設定です。資金繰りに困った主人公が登場します。物語の結末を考えてください。"
+  },
+  {
+    "id": "V04",
+    "copyBefore": true,
+    "candidates": "",
+    "copyAfter": true,
+    "marks": [
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": "今日は久しぶりに本屋に寄りました。感想文の構成を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ フルセキュア：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "今日は久しぶりに本屋に寄りました。感想文の構成を考えてください。"
+  },
+  {
+    "id": "V05",
+    "copyBefore": true,
+    "candidates": "",
+    "copyAfter": true,
+    "marks": [
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": "起訴と逮捕の一般的な違いを説明してください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ フルセキュア：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "起訴と逮捕の一般的な違いを説明してください。"
+  },
+  {
+    "id": "V06",
+    "copyBefore": true,
+    "candidates": "",
+    "copyAfter": true,
+    "marks": [
+      {
+        "marked": false,
+        "selected": false,
+        "source": null,
+        "text": "秘密を守ることは大事です。新人向けの研修案を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ フルセキュア：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "秘密を守ることは大事です。新人向けの研修案を考えてください。"
+  }
+]

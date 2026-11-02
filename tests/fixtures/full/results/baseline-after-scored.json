@@ -1,0 +1,356 @@
+{
+  "method": "browser-recorded",
+  "summary": {
+    "positive": 16,
+    "protectedAll": 16,
+    "negative": 8,
+    "falseAltered": 0,
+    "total": 24,
+    "requestKept": 24,
+    "both": 16,
+    "targets": 21,
+    "targetsCovered": 21
+  },
+  "rows": [
+    {
+      "id": "P01",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "高橋 美咲",
+          "covered": true
+        },
+        {
+          "text": "０８０（００００）０００２",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "担当者名：[人物1_e8b97860bca0]\n電話番号は[電話1_e8b97860bca0]です。返信文を作ってください。"
+    },
+    {
+      "id": "P02",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "月末の引き落としをまかなえません",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_e4d00a4d4bbe]支払い先への説明文を考えてください。"
+    },
+    {
+      "id": "P03",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "既存客にだけ返金保証を付けます",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_4de1c7ced123]告知文の構成を相談したいです。"
+    },
+    {
+      "id": "P04",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "72度で18分攪拌すること",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_9f79aa0e8054]不良品を減らすための確認項目を教えてください。"
+    },
+    {
+      "id": "P05",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "双極性障害だと打ち明けられました",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_fe9963c05e27]仕事量の調整方法を教えてください。"
+    },
+    {
+      "id": "P06",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "県内に一社しかない工房",
+          "covered": true
+        },
+        {
+          "text": "代表の甥",
+          "covered": true
+        },
+        {
+          "text": "従業員は二人",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "特定につながる詳しい背景は省略します。特定につながる詳しい背景は省略します。特定につながる詳しい背景は省略します。契約の確認項目を教えてください。"
+    },
+    {
+      "id": "P07",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "利用者番号を書き換えるだけで別の人の注文履歴も開けてしまいます",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_0500e4588207]修正の優先順位を教えてください。"
+    },
+    {
+      "id": "P08",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "納品後90日払い",
+          "covered": true
+        },
+        {
+          "text": "875,000円",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "取引条件は[機密値1_7da00f32be63]です。見積額は[金額等1_7da00f32be63]です。値上げの伝え方を教えてください。"
+    },
+    {
+      "id": "P09",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "市内唯一の古楽器専門店",
+          "covered": true
+        },
+        {
+          "text": "社長の妻",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "特定につながる詳しい背景は省略します。依頼の断り方を教えてください。"
+    },
+    {
+      "id": "P10",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "来年撤退する予定はありません",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_3bb4d9d2a3b4]取引先へ継続を伝える文面を考えてください。"
+    },
+    {
+      "id": "P11",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "synthetic_demo_secret_987654",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "api_key: [認証情報1_fbf39a969423]\nエラーの原因を切り分ける手順を教えてください。"
+    },
+    {
+      "id": "P12",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "離婚の話し合いをしており借金もあります",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_1ed418aa4b74]予約変更の返信案を考えてください。"
+    },
+    {
+      "id": "A01",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "来週に買収交渉を始めます",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "これは架空の物語です。[非公開情報1_26d7f41805ac]対外説明の準備事項を教えてください。"
+    },
+    {
+      "id": "A02",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "入札の前に落札者を決めてあります",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "一般的な注意点を教えてください。[非公開情報1_83c7791e98de]今後の対応を相談したいです。"
+    },
+    {
+      "id": "A03",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "顧客は今月から透析を受けています",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "どう対応すればよいですか、[非公開情報1_383017fa3e1d]"
+    },
+    {
+      "id": "A04",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "逮捕されたため",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_687813535797]請求書の宛先変更を伝える文面を作ってください。"
+    },
+    {
+      "id": "N01",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "週末は水族館に行って写真を撮りました。写真につける短いコメントを考えてください。"
+    },
+    {
+      "id": "N02",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "これは架空の物語です。市内唯一の専門店が来月閉店する予定です。物語の続きを考えてください。"
+    },
+    {
+      "id": "N03",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "公開済みのお知らせによると、市内唯一の専門店は今月閉店する予定です。記事の見出しを考えてください。"
+    },
+    {
+      "id": "N04",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "当店は閉店する予定はありません。通常営業の案内を短くしてください。"
+    },
+    {
+      "id": "N05",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "業務委託契約の一般的な確認方法を教えてください。"
+    },
+    {
+      "id": "N06",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "公表済みのニュースでは二社の合併が発表されています。一般向けに用語を説明してください。"
+    },
+    {
+      "id": "N07",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "今日はオンラインで打ち合わせをしました。次回の日程を決めるメールを考えてください。"
+    },
+    {
+      "id": "N08",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "病歴や障害情報はAIに入力しないようにしましょう。この注意書きを読みやすくしてください。"
+    }
+  ]
+}

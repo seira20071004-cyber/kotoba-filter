@@ -1,0 +1,428 @@
+{
+  "method": "browser-recorded",
+  "summary": {
+    "positive": 16,
+    "protectedAll": 16,
+    "negative": 16,
+    "falseAltered": 0,
+    "total": 32,
+    "requestKept": 32,
+    "both": 16,
+    "targets": 19,
+    "targetsCovered": 19
+  },
+  "rows": [
+    {
+      "id": "H01",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "運転資金が底をつき、仕入れ代金を払えない状態",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_991d94482a7d]支払先への説明文を作ってください。"
+    },
+    {
+      "id": "H02",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "抗がん剤の治療を続けています",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_9d36180aa1f3]引き継ぎの進め方を教えてください。"
+    },
+    {
+      "id": "H03",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "IDを変更すると他社の請求書が見られます",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_f19769241f3d]報告メールを作ってください。"
+    },
+    {
+      "id": "H04",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "横領の疑いで捜査を受けています",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_5b274d82189e]問い合わせへの返答を考えてください。"
+    },
+    {
+      "id": "H05",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "国内で一社しかない修理工房",
+          "covered": true
+        },
+        {
+          "text": "創業者の姪",
+          "covered": true
+        },
+        {
+          "text": "スタッフは三人",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "特定につながる詳しい背景は省略します。特定につながる詳しい背景は省略します。特定につながる詳しい背景は省略します。断るメールを作ってください。"
+    },
+    {
+      "id": "H06",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "入札前に競合と価格を取り決めています",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_c6f488904089]改善策を教えてください。"
+    },
+    {
+      "id": "H07",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "薬液を二度濾過してから加熱する方法",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_79f0a35536c0]手順書の構成を提案してください。"
+    },
+    {
+      "id": "H08",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "増員も値下げも行いません",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_bbbdc5e7aca5]説明の順番を相談したいです。"
+    },
+    {
+      "id": "H09",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "依頼者は不妊治療を受けています",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "返信案を考えてください、[非公開情報1_fb49a2982fcb]"
+    },
+    {
+      "id": "H10",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "自己破産したため",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_d49c5b20bbee]通知の文面を考えてください。"
+    },
+    {
+      "id": "H11",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "給与の支払いが滞っています",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "公表済みの資料では黒字です。[非公開情報1_ad697465dc64]説明文を作ってください。"
+    },
+    {
+      "id": "H12",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "認知症の診断を受けました",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "これはフィクションです。[非公開情報1_cf1792339e08]対応方法を提案してください。"
+    },
+    {
+      "id": "H13",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "新サービスでは解約金を免除します",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "以下は社外秘です。[非公開情報1_cc608387a43b]告知案を作ってください。"
+    },
+    {
+      "id": "H14",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "全額後払い",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_a830c17af216]交渉の注意点を教えてください。"
+    },
+    {
+      "id": "H15",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "休職理由はうつ病",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "[非公開情報1_cee8abdeb527]どう返事すればよいですか？"
+    },
+    {
+      "id": "H16",
+      "kind": "positive",
+      "targets": [
+        {
+          "text": "鈴木 花子",
+          "covered": true
+        },
+        {
+          "text": "090-0000-0011",
+          "covered": true
+        }
+      ],
+      "protectedAll": true,
+      "requestKept": true,
+      "both": true,
+      "altered": true,
+      "output": "氏名：[人物1_611972d097d1]\n電話番号は[電話1_611972d097d1]です。署名を作ってください。"
+    },
+    {
+      "id": "J01",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "公表済みの決算によると、事業から撤退する予定です。見出しを考えてください。"
+    },
+    {
+      "id": "J02",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "これは架空の小説です。経理部長が逮捕され、会社は倒産します。あらすじを作ってください。"
+    },
+    {
+      "id": "J03",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "顧客の病歴は外部AIへ送信しないでください。注意書きを作ってください。"
+    },
+    {
+      "id": "J04",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "機密情報を保護するための一般的な方法を説明してください。"
+    },
+    {
+      "id": "J05",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "来月閉店する予定はありません。営業案内を作ってください。"
+    },
+    {
+      "id": "J06",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "今日は仕事の後に散歩をしました。日記を読みやすくしてください。"
+    },
+    {
+      "id": "J07",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "自己破産とはどういう意味ですか？一般的な手続きを説明してください。"
+    },
+    {
+      "id": "J08",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "契約書で確認すべき点を一覧にしてください。"
+    },
+    {
+      "id": "J09",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "不良品を減らすための検査項目を提案してください。"
+    },
+    {
+      "id": "J10",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "公開済みのニュースでは買収の理由が解説されています。用語を説明してください。"
+    },
+    {
+      "id": "J11",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "従業員の健康情報を収集しないようにしましょう。研修資料の見出しを作ってください。"
+    },
+    {
+      "id": "J12",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "仮にという言葉の意味を教えてください。"
+    },
+    {
+      "id": "J13",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "明日は打ち合わせがあります。議事録のテンプレートを作ってください。"
+    },
+    {
+      "id": "J14",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "週末は友人と料理をします。献立を提案してください。"
+    },
+    {
+      "id": "J15",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "APIキーとは何ですか？安全な管理方法を教えてください。"
+    },
+    {
+      "id": "J16",
+      "kind": "negative",
+      "targets": [],
+      "protectedAll": false,
+      "requestKept": true,
+      "both": false,
+      "altered": false,
+      "output": "架空の物語を書いています。登場人物の趣味は読書です。続きを考えてください。"
+    }
+  ]
+}
