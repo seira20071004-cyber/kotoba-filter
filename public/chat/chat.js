@@ -1,13 +1,18 @@
-import {standardReview} from './standard.mjs?v=standard2';
-import {TYPES,partitionReview,abstractMessage,addAbstractionManual} from './abstraction.mjs?v=standard2';
-import * as semanticDetector from './local-detector.mjs?v=standard2';
-import * as piiDetector from './pii-detector.mjs?v=standard2';
-import {restoreText,applyIdentityLinks,mergePIICandidates} from './pii-core.mjs?v=standard2';
-import {personalReview,selectContext,contextState,contextKey,pendingContexts,projectSelection,copyIsReady} from './check-review.mjs?v=standard2';
+import {fullReview,fullMessage,GENERALIZATIONS} from './full.mjs?v=full1';
+import {standardReview} from './standard.mjs?v=full1';
+import {TYPES,partitionReview,abstractMessage,addAbstractionManual} from './abstraction.mjs?v=full1';
+import * as semanticDetector from './local-detector.mjs?v=full1';
+import * as piiDetector from './pii-detector.mjs?v=full1';
+import {restoreText,applyIdentityLinks,mergePIICandidates} from './pii-core.mjs?v=full1';
+import {personalReview,selectContext,contextState,contextKey,pendingContexts,projectSelection,copyIsReady} from './check-review.mjs?v=full1';
 const $=s=>document.querySelector(s),input=$('#messageInput');
 let review=null,baseReview=null,contexts=[],selected=new Set(),mapping=[],links=[],manualRanges=[],busy=false,complete=false,generation=0,preparing=false,composing=false,session='';
 let contextDecisions=new Map(),preparationEpoch=0;
-const withContext=()=>document.querySelector('[name=protectionMode]:checked').value==='standard';
+const protection=()=>document.querySelector('[name=protectionMode]:checked').value;
+const isFull=()=>protection()==='full';
+const withContext=()=>protection()!=='light';
+const output=()=>isFull()?fullMessage(review,selected,contexts,{session}):abstractMessage(review,selected,{session});
+const restorable=()=>mapping.filter(m=>m.restorable!==false);
 const mode=()=>document.querySelector('[name=checkMode]:checked').value;
 const ready=()=>piiDetector.isReady()&&(!withContext()||semanticDetector.isReady());
 const newSession=()=>{session=Array.from(crypto.getRandomValues(new Uint8Array(6)),n=>n.toString(16).padStart(2,'0')).join('');$('#responseInput').value='';$('#restoredOutput').value='';$('#restoreStatus').textContent='';$('#copyRestored').disabled=true;};
@@ -27,7 +32,7 @@ function controls(){
   $('#selectAll').disabled=!complete||!review?.findings.length;$('#selectNone').disabled=!complete||!review?.findings.length;
   for(const id of ['manualAdd','manualPhrase','aliasAdd','aliasPhrase','aliasTarget'])$('#'+id).disabled=!complete;
   $('#aliasClear').disabled=!complete||!links.length;
-  $('#restorePanel').hidden=!complete||!mapping.length;$('#restoreButton').disabled=!complete||!mapping.length||!$('#responseInput').value.trim()||$('#responseInput').value.length>20000;
+  $('#restorePanel').hidden=!complete||!restorable().length;$('#restoreButton').disabled=!complete||!restorable().length||!$('#responseInput').value.trim()||$('#responseInput').value.length>20000;
   $('#confidentialKeywords').disabled=locked;$('#piiDevice').disabled=locked||mode()==='rules';
   document.querySelectorAll('[name=protectionMode]').forEach(el=>el.disabled=locked);
   document.querySelectorAll('[name=checkMode]').forEach(el=>el.disabled=locked);
@@ -42,7 +47,7 @@ function invalidate({preservePreparation=false}={}){
 }
 function preview(){
   if(!review)return;
-  const result=abstractMessage(review,selected,{session});mapping=complete?result.mapping:[];$('#reviewPreview').value=complete?result.text:'';$('#reviewPreview').placeholder=complete?'':'チェックが完了すると加工後の文章が表示されます。';
+  const result=output();mapping=complete?result.mapping:[];$('#reviewPreview').value=complete?result.text:'';$('#reviewPreview').placeholder=complete?'':'チェックが完了すると加工後の文章が表示されます。';
   const map=$('#replacementList');map.replaceChildren();const seen=new Set();
   for(const m of mapping){const key=m.original+'|'+m.replacement;if(seen.has(key))continue;seen.add(key);const li=document.createElement('li'),heading=document.createElement('strong'),why=document.createElement('p');heading.textContent=m.original+' → '+m.replacement;why.textContent='理由：'+m.reason;li.append(heading,why);map.append(li);}
   $('#selectionCount').textContent=selected.size+' / '+review.findings.length+'箇所を置換';$('#unselectedWarning').hidden=selected.size===review.findings.length;$('#copyStatus').textContent='';
@@ -59,14 +64,14 @@ function render(){
   const area=$('#reviewOriginal');area.replaceChildren();let cursor=0;
   for(const f of review.findings){area.append(document.createTextNode(review.original.slice(cursor,f.start)));const b=document.createElement('button');b.type='button';b.className='privacy-mark';b.dataset.finding=f.id;b.textContent=f.text;b.title=f.sources.join('＋')+'：'+TYPES[f.kind].label;b.setAttribute('aria-label',b.title+'：'+f.text+'。選択して置換する');b.onclick=()=>{if(!complete)return;newSession();selected.has(f.id)?selected.delete(f.id):selected.add(f.id);for(const c of contexts)if(!c.unresolved&&c.start<f.end&&f.start<c.end)contextDecisions.set(contextKey(c),'custom');preview();};area.append(b);cursor=f.end;}
   area.append(document.createTextNode(review.original.slice(cursor)));
-  $('#resultSummary').textContent=!complete?'選んだチェックを実行中です。完了するまでコピーはできません。':(review.findings.length||contexts.length)?(withContext()?'説明や立場は残し、具体値だけを置換します。候補・要確認は'+contexts.length+'件です。理由と加工文をご確認ください。':'個人情報の候補を初期選択しました。原文と加工文を確認してください。'):'候補は見つかりませんでした。個人情報・機密情報がないという保証ではありません。';
+  $('#resultSummary').textContent=!complete?'選んだチェックを実行中です。完了するまでコピーはできません。':(review.findings.length||contexts.length)?(withContext()?(isFull()?'背景・事情を一般化または非表示にする候補は':'具体値の候補・要確認は')+contexts.length+'件です。相談に必要な意味が残るか、理由と加工文をご確認ください。':'個人情報の候補を初期選択しました。原文と加工文を確認してください。'):'候補は見つかりませんでした。個人情報・機密情報がないという保証ではありません。';
   const reasons=$('#findingReasons');reasons.replaceChildren();for(const f of review.findings){const li=document.createElement('li');li.textContent=f.sources.join('＋')+'：'+TYPES[f.kind].label;reasons.append(li);}
   $('#contextReview').hidden=!withContext()||!contexts.length;
   const list=$('#contextList');list.replaceChildren();
   contexts.forEach((c,i)=>{
     const li=document.createElement('li'),label=document.createElement('label'),box=document.createElement('input'),title=document.createElement('strong'),quote=document.createElement('blockquote'),why=document.createElement('p'),source=document.createElement('small'),keep=document.createElement('button'),status=document.createElement('span');
-    box.type='checkbox';box.dataset.contextIndex=String(i);box.id='contextChoice'+i;box.setAttribute('aria-label','機密候補'+(i+1)+'を隠す');title.textContent=c.unresolved?'具体値を切り出せなかった箇所':'この具体値を隠す';if(c.unresolved)label.append(title);else label.append(box,title);
-    quote.textContent=review.original.slice(c.start,c.end);why.textContent='確認する理由：'+c.reason+(c.unresolved?' この欄では自動で文全体を隠しません。':'');source.textContent='検出元：'+c.sources.join('＋')+' ／ 機密性を断定するものではありません。';
+    box.type='checkbox';box.dataset.contextIndex=String(i);box.id='contextChoice'+i;box.setAttribute('aria-label','機密候補'+(i+1)+'を隠す');title.textContent=c.unresolved?'具体値を切り出せなかった箇所':c.generalization?'この表現へ一般化する':isFull()?'この範囲を隠す':'この具体値を隠す';if(c.unresolved)label.append(title);else label.append(box,title);
+    quote.textContent=review.original.slice(c.start,c.end);why.textContent=(c.generalization?'加工後：'+GENERALIZATIONS[c.generalization]+' ／ ':'')+'確認する理由：'+c.reason+(c.unresolved?' この欄では自動で文全体を隠しません。':'');source.textContent='検出元：'+c.sources.join('＋')+' ／ 機密性を断定するものではありません。';
     keep.type='button';keep.className='secondary';keep.textContent=c.unresolved?'原文が残ることを確認して続ける':'内容を残す';keep.setAttribute('aria-label','機密候補'+(i+1)+'の内容を残す');status.id='contextStatus'+i;status.className='decision-status';
     box.onchange=()=>{if(!complete)return;selected=selectContext(review,selected,c,box.checked);contextDecisions.set(contextKey(c),box.checked?'hide':'keep');newSession();preview();};
     keep.onclick=()=>{if(!complete)return;if(!c.unresolved)selected=selectContext(review,selected,c,false);contextDecisions.set(contextKey(c),'keep');newSession();preview();};
@@ -97,16 +102,16 @@ async function check(){
       review=partitionReview(mergePIICandidates(review,result.findings));
     }
     if(withContext()){
-      let extracted={values:[],unresolved:[]};
+      let extracted={values:[],unresolved:[]},fullFindings=[];
       if(mode()==='ai'){
         method('個人情報の確認済み · 機密情報を端末内AIで確認しています…',true);render();
         if(!semanticDetector.isReady())await prepareModel('context',id);if(id!==generation)return;
-        const result=await semanticDetector.analyzeValues(review.original,text=>{if(id===generation)method('機密情報：'+text,true);});if(id!==generation)return;extracted=result;
+        if(isFull()){const result=await semanticDetector.analyze(review.original,[],text=>{if(id===generation)method('文脈の確認：'+text,true);},'full');if(id!==generation)return;fullFindings=result.findings;}else{const result=await semanticDetector.analyzeValues(review.original,text=>{if(id===generation)method('機密情報：'+text,true);});if(id!==generation)return;extracted=result;}
       }
-      const standard=standardReview(review,extracted);contexts=standard.contexts;review=standard.review;
+      const result=isFull()?fullReview(review,fullFindings):standardReview(review,extracted);contexts=result.contexts;review=result.review;
     }
     if(id!==generation)return;
-    method(mode()==='ai'?'個人情報：'+piiDescription()+(withContext()?' ／ スタンダード：端末内AI＋ルールで具体値を抽出':' ／ ライト：個人情報の値のみ')+'。見落とし・誤検出は残ります。':'ルールのみで確認しました。'+(withContext()?'スタンダードの具体値をルールで抽出しました。文脈AIは未実行のため、見落としが増える可能性があります。':'ライトの個人情報のみを確認しました。')+'端末内AIは実行していません。');
+    method(mode()==='ai'?'個人情報：'+piiDescription()+(withContext()?(isFull()?' ／ フルセキュア：端末内AI＋背景・事情のルール':' ／ スタンダード：端末内AI＋ルールで具体値を抽出'):' ／ ライト：個人情報の値のみ')+'。見落とし・誤検出は残ります。':'ルールのみで確認しました。'+(withContext()?(isFull()?'フルセキュアの背景・事情をルールで確認しました。':'スタンダードの具体値をルールで抽出しました。')+'文脈AIは未実行のため、見落としが増える可能性があります。':'ライトの個人情報のみを確認しました。')+'端末内AIは実行していません。');
     baseReview=review;selected=new Set(review.findings.filter(f=>TYPES[f.kind].rank===1).map(f=>f.id));complete=true;$('#resultBadge').textContent='チェック完了';$('#localModelStatus').textContent=mode()==='ai'?'確認完了：'+piiDescription()+(withContext()?' ＋ 機密情報AI（GPU）':''):'ルールのみで確認しました。';aliasOptions();render();
   }catch(e){if(id!==generation)return;complete=false;$('#resultBadge').textContent='確認が完了していません';method('選んだ確認を完了できませんでした。コピーは無効です。',true);error(e.message+(withContext()?' ライトに切り替えて再チェックするか、「ルールのみ」を選べます。':' 「ルールのみ」を選んで再チェックすることもできます。'));}
   finally{if(id===generation){busy=false;controls();}}
@@ -115,16 +120,16 @@ $('#contextHideAll').onclick=()=>{if(!complete)return;for(const c of contexts.fi
 $('#contextKeepAll').onclick=()=>{if(!complete)return;for(const c of contexts){if(!c.unresolved)selected=selectContext(review,selected,c,false);contextDecisions.set(contextKey(c),'keep');}newSession();preview();};
 $('#checkButton').onclick=check;$('#cancelCheck').onclick=()=>{invalidate();$('#resultBadge').textContent='確認を中止しました';};input.addEventListener('input',()=>invalidate({preservePreparation:true}));input.addEventListener('compositionstart',()=>composing=true);input.addEventListener('compositionend',()=>composing=false);input.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&!e.isComposing&&!composing&&e.keyCode!==229){e.preventDefault();void check();}});
 $('#confidentialKeywords').addEventListener('input',invalidate);document.querySelectorAll('[name=checkMode]').forEach(el=>el.onchange=invalidate);
-document.querySelectorAll('[name=protectionMode]').forEach(el=>el.onchange=()=>{invalidate();$('#contextHelp').textContent=withContext()?'機密の具体値を抽出し、説明や立場を残します。候補には理由を表示します。AI抽出にはWebGPUが必要です。':'名前・住所・連絡先などを確認します。機密の具体値は確認しません。';});
+document.querySelectorAll('[name=protectionMode]').forEach(el=>el.onchange=()=>{invalidate();$('#contextHelp').textContent=withContext()?(isFull()?'特定につながる背景や非公開の事情も一般化・非表示にします。相談の意味が変わる場合があります。候補と加工文を確認してください。一般化部分は自動復元しません。完全な漏洩防止を保証するものではありません。':'機密の具体値を抽出し、説明や立場を残します。候補には理由を表示します。AI抽出にはWebGPUが必要です。'):'名前・住所・連絡先などを確認します。機密の具体値は確認しません。';});
 $('#piiDevice').onchange=()=>{piiDetector.reset();invalidate();$('#localModelStatus').textContent='個人情報AIの実行環境を変更しました。再準備してチェックしてください。';};
 $('#clearAllData').onclick=()=>{input.value='';$('#confidentialKeywords').value='';invalidate();$('#resultBadge').textContent='画面のデータを消去しました';$('#localModelStatus').textContent='画面のデータを消去しました。クリップボードとモデルキャッシュは残ります。';input.focus();};
 $('#clearButton').onclick=()=>{input.value='';invalidate();$('#resultBadge').textContent='まだチェックしていません';input.focus();};
-$('#sampleButton').onclick=()=>{if(input.value&&!confirm('入力中の文章をサンプルに置き換えますか？'))return;input.value=withContext()?'担当者名：山田 太郎\n電話番号は090(0000)0001です。\nここからが社外秘です。\n見積金額は300万円、値引率は28%です。注文番号はORD-2027-042です。\n新製品名はミラージュで、発売予定日は2027年4月1日です。支払条件は翌月末払いです。\n週末は映画を見ます。':'担当は山田太郎です。山田さんに返信してください。彼のメールはtaro@example.com、電話は090-0000-0000です。週末は映画を見ます。';invalidate();input.focus();};
+$('#sampleButton').onclick=()=>{if(input.value&&!confirm('入力中の文章をサンプルに置き換えますか？'))return;input.value=isFull()?'県内唯一の医療機器専門店で、創業者の長女が経理を担当しています。その人から、来月閉店するので契約を打ち切りたいと言われました。どう返事すればよいですか？':withContext()?'担当者名：山田 太郎\n電話番号は090(0000)0001です。\nここからが社外秘です。\n見積金額は300万円、値引率は28%です。注文番号はORD-2027-042です。\n新製品名はミラージュで、発売予定日は2027年4月1日です。支払条件は翌月末払いです。\n週末は映画を見ます。':'担当は山田太郎です。山田さんに返信してください。彼のメールはtaro@example.com、電話は090-0000-0000です。週末は映画を見ます。';invalidate();input.focus();};
 $('#prepareLocalAI').onclick=()=>void prepare();$('#selectAll').onclick=()=>{if(!complete)return;newSession();selected=new Set(review.findings.map(f=>f.id));for(const c of contexts.filter(c=>!c.unresolved))contextDecisions.set(contextKey(c),'hide');preview();};$('#selectNone').onclick=()=>{newSession();selected.clear();for(const c of contexts.filter(c=>!c.unresolved))contextDecisions.set(contextKey(c),'keep');preview();};
 $('#manualAdd').onclick=()=>{if(!complete)return;try{const phrase=$('#manualPhrase').value;const r=addAbstractionManual(review,selected,phrase);let p=0;while((p=review.original.indexOf(phrase,p))>=0){manualRanges.push({start:p,end:p+phrase.length,kind:'manual',labels:['本人が追加した非表示箇所'],sources:['手動']});p+=phrase.length;}review=r.review;selected=r.selected;newSession();$('#manualPhrase').value='';$('#manualError').textContent='';render();}catch(e){$('#manualError').textContent=e.message;}};
 $('#aliasAdd').onclick=()=>{try{const target=baseReview.findings.find(f=>f.id===$('#aliasTarget').value);if(!target)throw Error('検出した人物・組織を選んでください。');const next=[...links,{alias:$('#aliasPhrase').value,target:target.text,kind:target.kind}];const extra=applyIdentityLinks(baseReview,next);const nextReview=partitionReview(baseReview,[...manualRanges,...extra]);selected=projectSelection(review,selected,nextReview,extra);review=nextReview;links=next;newSession();$('#aliasLinks').replaceChildren();for(const l of links){const li=document.createElement('li');li.textContent=l.alias+' → '+l.target+' と同じラベル';$('#aliasLinks').append(li);}$('#aliasPhrase').value='';$('#aliasError').textContent='';render();}catch(e){$('#aliasError').textContent=e.message;}};
 $('#aliasClear').onclick=()=>{links=[];const nextReview=partitionReview(baseReview,manualRanges);selected=projectSelection(review,selected,nextReview);review=nextReview;newSession();$('#aliasLinks').replaceChildren();render();};
 async function copy(text,status){const version=session;try{await navigator.clipboard.writeText(text);if(version!==session)return;$('#'+status).textContent='コピーしました。貼り付け先でも内容をご確認ください。';}catch{$('#'+status).textContent='自動コピーが使えません。文章を選択して ⌘ / Ctrl＋C でコピーしてください。';}}
-$('#copyButton').onclick=()=>{if(review&&copyIsReady(complete,busy||preparing,contexts,contextDecisions))void copy(abstractMessage(review,selected,{session}).text,'copyStatus');};
+$('#copyButton').onclick=()=>{if(review&&copyIsReady(complete,busy||preparing,contexts,contextDecisions))void copy(output().text,'copyStatus');};
 $('#responseInput').oninput=()=>{$('#restoredOutput').value='';$('#restoreStatus').textContent=$('#responseInput').value.length>20000?'復元できる回答は20,000文字までです。文章は切り捨てていません。':'';$('#copyRestored').disabled=true;controls();};$('#restoreButton').onclick=()=>{try{const r=restoreText($('#responseInput').value,mapping);$('#restoredOutput').value=r.text;$('#restoreStatus').textContent=r.unknown.length?'現在の置換表と一致しないラベルが'+r.unknown.length+'種類あります。元に戻さず残しています。':r.restored?r.restored+'箇所を端末内で復元しました。内容をご確認ください。':'一致するラベルがありません。別の文章の回答や、AIが書き換えたラベルは復元できません。';$('#copyRestored').disabled=!r.restored||!!r.unknown.length;}catch(e){$('#restoreStatus').textContent=e.message;}};$('#copyRestored').onclick=()=>{if(!$('#copyRestored').disabled)void copy($('#restoredOutput').value,'restoreStatus');};
 $('#aboutButton').onclick=()=>$('#aboutDialog').showModal();$('#closeAbout').onclick=()=>$('#aboutDialog').close();newSession();controls();

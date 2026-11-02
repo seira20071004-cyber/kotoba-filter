@@ -1,7 +1,7 @@
-import {normalizedView} from './privacy.mjs?v=standard2';
-import {abstractionReview,partitionReview,TYPES,reasonFor} from './abstraction.mjs?v=standard2';
-import {unitsFor} from './confidential.mjs?v=standard2';
-import {contextCandidates,contactOnlyCandidate} from './check-review.mjs?v=standard2';
+import {normalizedView} from './privacy.mjs?v=full1';
+import {abstractionReview,partitionReview,TYPES,reasonFor} from './abstraction.mjs?v=full1';
+import {unitsFor} from './confidential.mjs?v=full1';
+import {contextCandidates,contactOnlyCandidate} from './check-review.mjs?v=full1';
 
 export const VALUE_KINDS={amount:'amount',number:'number',product:'product',quantity:'quantity',date:'date',term:'confidentialValue',technical:'confidentialValue',plan:'confidentialValue',other:'confidentialValue'};
 const cue=/社外秘|極秘|未公開|未公表|未発表|公開前|口外禁止|オフレコ|ここだけの話|まだ発表していない|NDA/iu;
