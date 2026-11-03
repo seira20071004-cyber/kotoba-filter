@@ -1,12 +1,14 @@
-import {normalizedView} from './privacy.mjs?v=fullquality3';
-import {abstractionReview,partitionReview,TYPES,reasonFor} from './abstraction.mjs?v=fullquality3';
-import {unitsFor} from './confidential.mjs?v=fullquality3';
-import {contextCandidates,contactOnlyCandidate} from './check-review.mjs?v=fullquality3';
+import {contextPolicy} from './context-policy.mjs?v=standardquality3';
+import {publicContext,requestOnly,riskReasons,PRIVATE_CUE} from './full-policy.mjs?v=standardquality3';
+import {normalizedView} from './privacy.mjs?v=standardquality3';
+import {abstractionReview,partitionReview,TYPES,reasonFor} from './abstraction.mjs?v=standardquality3';
+import {unitsFor} from './confidential.mjs?v=standardquality3';
+import {contextCandidates,contactOnlyCandidate} from './check-review.mjs?v=standardquality3';
 
 export const VALUE_KINDS={amount:'amount',number:'number',product:'product',quantity:'quantity',date:'date',term:'confidentialValue',technical:'confidentialValue',plan:'confidentialValue',other:'confidentialValue'};
-const cue=/社外秘|極秘|未公開|未公表|未発表|公開前|口外禁止|オフレコ|ここだけの話|まだ発表していない|NDA/iu;
-const business=/見積|注文|受注|請求|契約|案件|顧客|取引|仕入|原価|単価|値引|保守|売上|利益|予算|資金調達|給与|基本給|人事|新製品|商品型番|製品型番|発売|配合|製造|工程|独自|ノウハウ|認証|管理画面|開発コード|開発中|試作品|支払|支払い/u;
-const ordinary=/一般論|一般的|とは|定義|注意点を教え|公開済み|公表済み|架空|例えば/u;
+const cue=new RegExp(PRIVATE_CUE.source+'|オフレコ|ここだけの話',PRIVATE_CUE.flags);
+const business=/納期|納品|締切|公開日|公開予定|見積|注文|受注|請求|契約|案件|顧客|取引|仕入|原価|単価|値引|保守|売上|利益|予算|資金調達|給与|基本給|人事|新製品|商品型番|製品型番|発売|配合|製造|工程|独自|ノウハウ|認証|管理画面|開発コード|開発中|試作品|支払|支払い/u;
+
 const declaration=/^(?:では[、,]?|これ(?:から|以降)は|ここから(?:は|が)?|この(?:内容|方法|情報|件)は|以下は)?\s*(?:社外秘|極秘|非公開|未公開|口外禁止)(?:の内容)?(?:です|になります|として扱ってください)?[。！!\s]*$/u;
 const onlyDeclaration=t=>declaration.test(t.trim());
 const ordinaryHobby=t=>/^(?:週末|休日)は(?:映画を見ます|カレーを作ります|家で休みます)[。！!]?$/u.test(t.trim());
@@ -21,10 +23,12 @@ Examples:
 独自のコツは洗浄液を毎回交換することです。 => review, 洗浄液を毎回交換すること(technical)
 週末はカレーを作ります。 => public, []
 一般的な秘密保持契約の注意点を教えてください。 => public, []
+Private-use placeholder characters mark values already detected by rules. Never extract or copy those placeholders; inspect only the remaining text.
 Preserve context: keep 見積金額は, 発売予定日は, 支払条件は outside quotes. Return JSON only.`;
 function matchingView(original){const v=normalizedView(original);v.text=Array.from({length:v.text.length},(_,i)=>/[\r\n]/u.test(original.slice(v.starts[i],v.ends[i]))?'\n':v.text[i]).join('');return v;}
 function candidate(original,v,a,b,kind,source,reason){return{start:v.starts[a],end:v.ends[b-1],kind,text:original.slice(v.starts[a],v.ends[b-1]),labels:[TYPES[kind].label],sources:[source],reason:reason||reasonFor(kind)};}
-function businessUnits(original){let privateScope=false;const units=unitsFor(original),out=[];let end=0;for(const u of units){if(/\n\s*\n/.test(original.slice(end,u.start)))privateScope=false;if(/公開済み|公表済み/.test(u.text)&&!cue.test(u.text))privateScope=false;if(cue.test(u.text)&&!ordinary.test(u.text))privateScope=true;out.push({...u,privateScope,risky:!ordinary.test(u.text)&&(privateScope||business.test(u.text)),declaration:onlyDeclaration(u.text)});end=u.end;}return out;}
+function businessUnits(original){let privateScope=false;const units=unitsFor(original),policy=contextPolicy(original),out=[];let end=0;for(const u of units){if(/\n\s*\n/u.test(original.slice(end,u.start)))privateScope=false;const excluded=policy.get(u.id)?.exclude||publicContext(u.text)||(/(?:(?:とは(?:何|なに|どういう|どんな)|の意味|の定義)|(?:一般的な|一般論として).{0,40}(?:教えて|知りたい|説明して))/u.test(u.text)&&!/(?:実際|弊社|当社|自社|顧客|取引先|社内)/u.test(u.text)&&!cue.test(u.text));if(publicContext(u.text))privateScope=false;if(cue.test(u.text)&&!excluded)privateScope=true;out.push({...u,excluded,privateScope,risky:!excluded&&(privateScope||business.test(u.text)),declaration:onlyDeclaration(u.text)});end=u.end;}return out;}
+
 export function standardRules(original){
  const v=matchingView(original),units=businessUnits(original),raw=abstractionReview(original),out=[];
  const eligible=f=>units.some(u=>f.start>=u.start&&f.end<=u.end&&u.risky&&!u.declaration);
@@ -53,8 +57,12 @@ export function groundStandard(result,units,original){
    if(q.length<2||p<0||u.text.indexOf(q,p+1)>=0||q.length>=u.text.replace(/[。！？\s]+$/u,'').length||cue.test(q)||/[。！？\n]/u.test(q)){uncertain=true;continue;}
    // For numeric types do not accept explanatory words in a model's quote.
    const kind=VALUE_KINDS[item.type];let quote=q,offset=0;const prefix=quote.match(/^(?:(?:見積金額|見積額|値引率|値引き率|注文番号|案件番号|商品型番|製品型番|新製品名|製品名|商品名|開発コード名|発売予定日|発売日|支払条件|支払い条件|取引条件|配合比率|独自のコツ|製造方法|担当者名|氏名|名前|電話番号|電話|メールアドレス)(?:は|[:：=])\s*)/u);if(prefix){offset=prefix[0].length;quote=quote.slice(offset).replace(/(?:です|になります)[。]?$/u,'');}if(quote.length<2){uncertain=true;continue;}
-   if(['amount','number','product','quantity','date'].includes(kind)){const extracted=standardRules(quote).filter(f=>f.kind===kind);if(extracted.length===1){offset+=extracted[0].start;quote=quote.slice(extracted[0].start,extracted[0].end);}else if(kind==='amount'){const m=quote.match(/(?:[¥$€]\s*)?\d[\d,]*(?:\.\d+)?(?:兆|億|万|千|百)?(?:円|ドル|ユーロ|%|パーセント)/u);if(m){offset+=m.index;quote=m[0];}else{uncertain=true;continue;}}}
-   const a=u.normalizedStart+p+offset;values.push(candidate(original,v,a,a+quote.length,kind,'端末内AI（具体値抽出）'));
+   if(['amount','number','quantity','date'].includes(kind)){
+    const parts=numericValueParts(quote,kind);
+    if(!parts.length){uncertain=true;continue;}
+    for(const part of parts){const a=u.normalizedStart+p+offset+part.start;values.push(candidate(original,v,a,a+part.text.length,kind,'端末内AI（具体値抽出）'));}
+   }else{const a=u.normalizedStart+p+offset;values.push(candidate(original,v,a,a+quote.length,kind,'端末内AI（具体値抽出）'));}
+
   }
   if(uncertain||!d.values.length){const fallback=technicalValue(u,original,v);if(fallback){values.push(fallback);continue;}}
   if(uncertain||!d.values.length)unresolved.push({...u,labels:['機密の具体値・要確認'],sources:['端末内AI（具体値抽出）'],text:original.slice(u.start,u.end),reason:'端末内AIが機密の可能性を検出しましたが、説明を残したまま隠す具体値を確定できませんでした。残すか、語句を手動で指定してください。'});
@@ -62,18 +70,24 @@ export function groundStandard(result,units,original){
  return{values:compactValues(original,values),unresolved};
 }
 export function standardReview(personal,model={values:[],unresolved:[]}){
- const original=personal.original,rules=standardRules(original),values=compactValues(original,[...rules,...model.values]).filter(f=>!personal.findings.some(p=>p.start<=f.start&&p.end>=f.end));
+ const original=personal.original,units=businessUnits(original),excluded=c=>units.some(u=>u.excluded&&u.start<=c.start&&u.end>=c.end),rules=standardRules(original),values=compactValues(original,[...rules,...model.values.filter(v=>!excluded(v))]).filter(f=>!personal.findings.some(p=>p.start<=f.start&&p.end>=f.end));
  const review=partitionReview(personal,values),contexts=values.map((f,i)=>({...f,id:'value'+i}));
- const rulesRisks=[...contextCandidates(original,[],personal),...businessUnits(original).filter(u=>u.privateScope&&business.test(u.text)&&!u.declaration&&!ordinary.test(u.text)).map(u=>({...u,sources:['非公開指定と業務文脈のルール'],labels:['機密の要確認箇所']}))].filter(c=>!onlyDeclaration(c.text)&&!values.some(f=>f.start<c.end&&f.end>c.start));
- const unresolved=compactValues(original,[...rulesRisks,...model.unresolved].filter(c=>!onlyDeclaration(c.text)&&!contactOnlyCandidate(original,c,personal)&&!coveredTemplate(original,c,[...personal.findings,...values]))).map((c,i)=>({...c,id:'unresolved'+i,unresolved:true,reason:c.reason||'機密の可能性がありますが、具体値を切り出せませんでした。原文を確認してください。'}));
+ const rulesRisks=[...contextCandidates(original,[],personal),...businessUnits(original).filter(u=>u.privateScope&&business.test(u.text)&&!u.declaration&&!u.excluded&&!requestOnly(u.text)).map(u=>({...u,sources:['非公開指定と業務文脈のルール'],labels:['機密の要確認箇所']}))].filter(c=>!onlyDeclaration(c.text)&&!values.some(f=>f.start<c.end&&f.end>c.start));
+ // A protected amount/date must not erase a warning about another fact in the same sentence.
+ const residualRisks=businessUnits(original).filter(u=>!u.excluded&&!u.declaration&&!requestOnly(u.text)&&!coveredTemplate(original,u,[...personal.findings,...values])).flatMap(u=>{const rest=remainingText(original,u,[...personal.findings,...values]),reasons=riskReasons(rest);return reasons.length?[{...u,labels:['具体値以外に残る機密の可能性'],sources:['残存内容のルール'],reason:'値を置換しても、'+reasons.join('・')+'に関する内容が残る可能性があります。スタンダードは説明や背景を自動では消しません。原文を残すか、追加で隠す語句を指定してください。'}]:[];});
+ const unresolved=compactValues(original,[...rulesRisks,...residualRisks,...model.unresolved].filter(c=>!excluded(c)&&!onlyDeclaration(c.text)&&!contactOnlyCandidate(original,c,personal)&&!coveredTemplate(original,c,[...personal.findings,...values]))).map((c,i)=>({...c,id:'unresolved'+i,unresolved:true,reason:c.reason||'機密の可能性がありますが、具体値を切り出せませんでした。原文を確認してください。'}));
  return{review,contexts:[...contexts,...unresolved].sort((a,b)=>a.start-b.start),values,unresolved};
 }
 
 function coveredTemplate(original,c,values){
- const ranges=values.filter(v=>v.start>=c.start&&v.end<=c.end).sort((a,b)=>a.start-b.start);let rest='',at=c.start;for(const v of ranges){if(v.end<=at)continue;rest+=original.slice(at,Math.max(at,v.start));at=v.end;}rest+=original.slice(at,c.end);
+ const ranges=values.filter(v=>v.start>=c.start&&v.end<=c.end);let rest=remainingText(original,c,values);
+ // Ignore a pure request only after known values are removed; explicit secrecy or factual assertions still prevent this exemption.
+ if(requestOnly(rest)&&!/[0-9]+(?:円|%|台|個|日|月|年)|[A-Za-z0-9_-]{8,}/u.test(rest))return true;
+ rest=rest.replace(/^(?:例えば[、,]\s*)?(?:実際の)?/u,'').replace(/^一般論として相談しますが[、,]\s*/u,'').replace(/^公開済みの資料には載っていませんが[、,]\s*/u,'');
+ if(ranges.length&&/^(?:納期|公開日|発売日|見積金額|見積額)(?:を|は)?(?:から)?(?:へ|に)(?:変更|延期|増額|減額)します[。！!]?$/u.test(rest))return true;
  if(/^(?:週末|休日)は(?:映画を見ます|カレーを作ります|家で休みます)[。！!]?$/u.test(rest.trim()))return true;
  if(!ranges.length)return false;
- return /^(?:(?:見積金額|見積額|金額|値引率|値引き率|注文番号|案件番号|商品型番|製品型番|新製品名|製品名|商品名|開発コード名|発売予定日|発売日|支払条件|支払い条件|取引条件|年間|月間|です|は|で|と|、|。|,)|[\s:：=])*$/u.test(rest);
+ return /^(?:(?:見積金額|見積額|金額|給与|基本給|売上|利益|原価|単価|予算|値引率|値引き率|注文番号|案件番号|商品型番|製品型番|新製品名|製品名|商品名|開発コード名|発売予定日|発売日|支払条件|支払い条件|取引条件|年間|月間|です|は|で|と|、|。|,)|[\s:：=])*$/u.test(rest);
 }
 
 function technicalValue(u,original,v){
@@ -82,3 +96,15 @@ function technicalValue(u,original,v){
  if(!m||!/(?:洗浄|交換|冷却|加熱|配合|混合|処理|迂回|省略|再利用|設定|接続)/u.test(m[1]))return null;
  const a=u.normalizedStart+m.index+m[0].lastIndexOf(m[1]);return candidate(original,v,a,a+m[1].length,'confidentialValue','端末内AI＋工程の句抽出','端末内AIの要確認判定と工程の文型が一致したため、設定・結果の説明を残して具体的な手順だけを置換します。');
 }
+
+function remainingText(original,c,values){let rest='',at=c.start;for(const v of values.filter(v=>v.start<c.end&&v.end>c.start).sort((a,b)=>a.start-b.start)){const start=Math.max(c.start,v.start),end=Math.min(c.end,v.end);if(end<=at)continue;rest+=original.slice(at,Math.max(at,start));at=end;}return rest+original.slice(at,c.end);}
+const NUMERIC_PATTERNS={
+ amount:/(?:[¥$€]\s*)[0-9][0-9,]*(?:\.[0-9]+)?(?:兆|億|万|千|百)?|[0-9][0-9,]*(?:\.[0-9]+)?(?:兆|億|万|千|百)?(?:円|ドル|ユーロ|%|パーセント)|[一二三四五六七八九十百千万億]+(?:円|割)/gu,
+ quantity:/(?:[0-9][0-9,]*(?:\.[0-9]+)?(?:万|千)?|[一二三四五六七八九十百千万]+)(?:台|個|件|本|セット|ロット|人|時間|日)(?:以上|以下|未満)?/gu,
+ date:/(?:[0-9]{2,4}年)?[0-9]{1,2}月[0-9]{1,2}日|[0-9]{4}[\/-][0-9]{1,2}[\/-][0-9]{1,2}|[0-9]{1,2}時(?:[0-9]{1,2}分)?|(?:来月|来年|再来月|今月|今年|明日|明後日|来週|今週|再来週|翌月末|月末|来春|来夏|来秋|来冬)/gu,
+};
+function numericValueParts(quote,kind){if(kind==='number')return /^[A-Za-z0-9][A-Za-z0-9_-]{1,60}$/u.test(quote)?[{start:0,text:quote}]:[];return [...quote.matchAll(NUMERIC_PATTERNS[kind])].map(m=>({start:m.index,text:m[0]}));}
+
+// Keep offsets and sentence IDs unchanged. The detector still receives surrounding clauses,
+// but does not need to generate quotes for known values a second time.
+export function standardModelUnits(original,units){const values=standardRules(original),v=normalizedView(original);let code=0xe000;while(original.includes(String.fromCharCode(code)))code++;const marker=String.fromCharCode(code);return units.map(u=>({...u,text:Array.from({length:u.text.length},(_,i)=>{const n=u.normalizedStart+i;return values.some(f=>v.starts[n]<f.end&&v.ends[n]>f.start)?marker:u.text[i];}).join('')}));}

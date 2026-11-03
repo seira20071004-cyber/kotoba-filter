@@ -1,0 +1,74 @@
+[
+  {
+    "id": "full-question-first",
+    "text": "どう対応すればよいですか、顧客は今月から透析を受けています。",
+    "copyBefore": false,
+    "candidates": "この範囲を隠す\n顧客は今月から透析を受けています。\n\n確認する理由：健康・家庭の具体的な事情に関する具体的な内容を検出しました。 値だけでなく内容が残る可能性があるため、この範囲を隠します。分離できた依頼部分は残しますが、相談の前提も減るため加工文を確認してください。\n\n検出元：文脈ルール ／ 機密性を断定するものではありません。\n内容を残す\n隠す選択済み",
+    "copyAfter": true,
+    "marks": [
+      {
+        "selected": false,
+        "source": null,
+        "text": "どう対応すればよいですか、"
+      },
+      {
+        "selected": true,
+        "source": "文脈ルール：機密内容の候補",
+        "text": "顧客は"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "selected": true,
+        "source": "ルール＋文脈ルール：日付・時期",
+        "text": "今月"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "selected": true,
+        "source": "文脈ルール：機密内容の候補",
+        "text": "から透析を受けています。"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": ""
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ フルセキュア：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "どう対応すればよいですか、[非公開情報1_823920e09864]"
+  },
+  {
+    "id": "light-values-retained",
+    "text": "電話番号は080-0000-0002です。見積金額は300万円です。",
+    "copyBefore": true,
+    "candidates": "",
+    "copyAfter": true,
+    "marks": [
+      {
+        "selected": false,
+        "source": null,
+        "text": "電話番号は"
+      },
+      {
+        "selected": true,
+        "source": "ルール：電話番号",
+        "text": "080-0000-0002"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": "です。見積金額は300万円です。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ ライト：個人情報の値のみ。見落とし・誤検出は残ります。",
+    "output": "電話番号は[電話1_c27286d24142]です。見積金額は300万円です。"
+  }
+]

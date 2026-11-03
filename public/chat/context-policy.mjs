@@ -1,4 +1,4 @@
-import {unitsFor} from './confidential.mjs?v=fullquality3';
+import {unitsFor} from './confidential.mjs?v=standardquality3';
 // Narrow intent/scope checks, not a blanket exemption for words such as "fiction".
 const privateCue=/社外秘|極秘|未公表|未公開|未発表|口外禁止|NDA|秘密保持|内々|水面下|社内限り|外には出せない|まだ.{0,16}(?:公表|発表|伝えていな)/iu;
 const realAnchor=/実際|現実|弊社|当社|自社|社内|顧客|取引先|従業員|社員|人事|査定|基本給|認証|管理画面|パスワード|API.?キー|アクセストークン|本番/u;
@@ -14,7 +14,7 @@ export function contextPolicy(original){
   if(actual||explicit)fictional=false;
   const pureGuidance=guidance.test(u.text)&&!factual.test(u.text)&&!realAnchor.test(u.text.replace(/個人情報|機密情報|社外秘情報|営業秘密/gu,''))&&!/(?:未公開|未発表|社外秘の|秘密保持|NDA)/iu.test(u.text);
   const generalFunding=/(?:資金調達|増資|議決権).{0,40}(?:とはどういう意味|一般論として知りたい)/u.test(u.text)&&!factual.test(u.text)&&!actual;
-  const published=/公開済み|公表済み|プレスリリース/u.test(u.text)&&/(?:一般的|解説|紹介文|読みたい|教えて)/u.test(u.text)&&!explicit&&!actual;
+  const published=!/(?:載って|掲載されて|公表されて|公開されて)(?:いない|いません|ない)|とは(?:異なり|違い)/u.test(u.text)&&/公開済み|公表済み|プレスリリース/u.test(u.text)&&/(?:一般的|解説|紹介文|読みたい|教えて)/u.test(u.text)&&!explicit&&!actual;
   const exclude=courtesy.test(u.text)||pureGuidance||generalFunding||published||intro||(fictional&&!actual&&!explicit);
   decisions.set(u.id,{unit:u,exclude,reason:exclude?(intro||fictional?'明示された架空設定':'具体的な非公開事実を含まない一般的な相談'):null});
   if(intro)fictional=true;lastEnd=u.end;

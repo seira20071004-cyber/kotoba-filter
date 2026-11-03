@@ -1,10 +1,10 @@
-import {fullReview,fullMessage,GENERALIZATIONS} from './full.mjs?v=fullquality3';
-import {standardReview} from './standard.mjs?v=fullquality3';
-import {TYPES,partitionReview,abstractMessage,addAbstractionManual} from './abstraction.mjs?v=fullquality3';
-import * as semanticDetector from './local-detector.mjs?v=fullquality3';
-import * as piiDetector from './pii-detector.mjs?v=fullquality3';
-import {restoreText,applyIdentityLinks,mergePIICandidates} from './pii-core.mjs?v=fullquality3';
-import {personalReview,selectContext,contextState,contextKey,pendingContexts,projectSelection,copyIsReady} from './check-review.mjs?v=fullquality3';
+import {fullReview,fullMessage,GENERALIZATIONS} from './full.mjs?v=standardquality3';
+import {standardReview} from './standard.mjs?v=standardquality3';
+import {TYPES,partitionReview,abstractMessage,addAbstractionManual} from './abstraction.mjs?v=standardquality3';
+import * as semanticDetector from './local-detector.mjs?v=standardquality3';
+import * as piiDetector from './pii-detector.mjs?v=standardquality3';
+import {restoreText,applyIdentityLinks,mergePIICandidates} from './pii-core.mjs?v=standardquality3';
+import {personalReview,selectContext,contextState,contextKey,pendingContexts,projectSelection,copyIsReady} from './check-review.mjs?v=standardquality3';
 const $=s=>document.querySelector(s),input=$('#messageInput');
 let review=null,baseReview=null,contexts=[],selected=new Set(),mapping=[],links=[],manualRanges=[],busy=false,complete=false,generation=0,preparing=false,composing=false,session='';
 let contextDecisions=new Map(),preparationEpoch=0;
