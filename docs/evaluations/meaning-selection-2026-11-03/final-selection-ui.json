@@ -1,0 +1,12 @@
+{
+  "pendingUI": {
+    "copyEnabled": false,
+    "hideEnabled": true,
+    "preview": "青い雲"
+  },
+  "appliedUI": {
+    "copyEnabled": true,
+    "output": "[非表示1_c54b979cec26]と青い雲を比較してください。",
+    "status": "選んだ箇所を追加で保護しました。加工文をご確認ください。"
+  }
+}

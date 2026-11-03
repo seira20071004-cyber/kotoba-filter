@@ -1,0 +1,18 @@
+{
+  "inputSelectionResult": {
+    "copyEnabled": true,
+    "hideDisabled": true,
+    "output": "😀[非表示1_e2018da78032]と青い雲を比較してください。",
+    "status": "選んだ箇所を追加で保護しました。加工文をご確認ください。"
+  },
+  "originalSelectionResult": {
+    "copyEnabled": true,
+    "output": "[非表示1_cdac4694aac9]と青い雲を比較してください。",
+    "status": "選んだ箇所を追加で保護しました。加工文をご確認ください。"
+  },
+  "unitBefore": "数量は[数量1_8cd7aad96e20]セットです。",
+  "explicitUnitResult": {
+    "copyEnabled": true,
+    "output": "数量は[取引条件1_443437c7d7d5]です。"
+  }
+}

@@ -1,5 +1,5 @@
-import {unitsFor} from './confidential.mjs?v=twomodes2';
-import {normalizedView} from './privacy.mjs?v=twomodes2';
+import {unitsFor} from './confidential.mjs?v=meaning3';
+import {normalizedView} from './privacy.mjs?v=meaning3';
 
 export const PRIVATE_CUE=/社外秘|極秘|未公開|未公表|未発表|公開前|発表前|口外禁止|社内限り|水面下|内々|NDA|秘密保持|外には出せない|まだ.{0,16}(?:公表|発表|伝えていな)/iu;
 const actual=/ただし|実際|現実|弊社|当社|自社|社内では|本番/u;

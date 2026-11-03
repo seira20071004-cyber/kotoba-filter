@@ -1,0 +1,23 @@
+{
+  "finalRestoreSource": {
+    "id": "final-restore",
+    "text": "年間500セット以上を納品します。見積金額は300万円です。",
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 通常モード：端末内AI＋ルールで具体値を抽出。見落とし・誤検出は残ります。",
+    "output": "年間[数量1_4d11270fee0d]セット以上を納品します。見積金額は[金額1_4d11270fee0d]円です。",
+    "warnings": []
+  },
+  "finalRestoration": {
+    "copyEnabled": true,
+    "restored": "年間500セット以上を納品します。見積金額は300万円です。"
+  },
+  "finalChosen": "納品",
+  "afterFinalSelection": {
+    "copyRestoredDisabled": true,
+    "oldResponse": "",
+    "oldRestored": "",
+    "output": "年間[数量1_48c9e4c1b77d]セット以上を[非表示1_48c9e4c1b77d]します。見積金額は[金額1_48c9e4c1b77d]円です。",
+    "status": "選んだ箇所を追加で保護しました。加工文をご確認ください。"
+  }
+}

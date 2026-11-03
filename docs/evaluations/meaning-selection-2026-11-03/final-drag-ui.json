@@ -1,0 +1,16 @@
+{
+  "dragPreview": "青い雲",
+  "finalDragOutput": {
+    "copyEnabled": true,
+    "output": "[非表示1_2c62defac8ca]と青い雲を比較してください。"
+  },
+  "clearUI": {
+    "copyEnabled": true,
+    "preview": ""
+  },
+  "invalidatedUI": {
+    "copyDisabled": true,
+    "hideDisabled": true,
+    "preview": ""
+  }
+}

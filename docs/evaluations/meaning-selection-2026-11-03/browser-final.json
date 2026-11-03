@@ -1,0 +1,47 @@
+[
+  {
+    "id": "quantity",
+    "text": "年間500セット以上を納品します。数量は800個以下です。返信案を考えてください。",
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 通常モード：端末内AI＋ルールで具体値を抽出。見落とし・誤検出は残ります。",
+    "output": "年間[数量1_94dcf3364a68]セット以上を納品します。数量は[数量2_94dcf3364a68]個以下です。返信案を考えてください。",
+    "warnings": []
+  },
+  {
+    "id": "amount-ratio",
+    "text": "見積金額を300万円から350万円へ増額します。値引率は28%です。説明文を考えてください。",
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 通常モード：端末内AI＋ルールで具体値を抽出。見落とし・誤検出は残ります。",
+    "output": "見積金額を[金額1_0db0e395836b]円から[金額2_0db0e395836b]円へ増額します。値引率は[割合1_0db0e395836b]%です。説明文を考えてください。",
+    "warnings": []
+  },
+  {
+    "id": "units-unicode",
+    "text": "在庫は５００㎏です。見積額は$1,200です。返信案を考えてください。",
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 通常モード：端末内AI＋ルールで具体値を抽出。見落とし・誤検出は残ります。",
+    "output": "在庫は[数量1_c79bb86f549d]㎏です。見積額は$[金額1_c79bb86f549d]です。返信案を考えてください。",
+    "warnings": []
+  },
+  {
+    "id": "dates",
+    "text": "納期を11月15日から12月20日へ延期します。返信案を考えてください。",
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 通常モード：端末内AI＋ルールで具体値を抽出。見落とし・誤検出は残ります。",
+    "output": "納期を[個人の日付1_292f53cefefc]から[個人の日付2_292f53cefefc]へ延期します。返信案を考えてください。",
+    "warnings": []
+  },
+  {
+    "id": "explicit-unit",
+    "text": "数量は500セットです。返信案を考えてください。",
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 通常モード：端末内AI＋ルールで具体値を抽出。見落とし・誤検出は残ります。",
+    "output": "数量は[取引条件1_032d92ff90d8]です。返信案を考えてください。",
+    "warnings": []
+  }
+]
