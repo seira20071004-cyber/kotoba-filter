@@ -1,10 +1,10 @@
-import {unitsFor} from './confidential.mjs?v=standardquality3';
-import {normalizedView} from './privacy.mjs?v=standardquality3';
+import {unitsFor} from './confidential.mjs?v=twomodes2';
+import {normalizedView} from './privacy.mjs?v=twomodes2';
 
 export const PRIVATE_CUE=/社外秘|極秘|未公開|未公表|未発表|公開前|発表前|口外禁止|社内限り|水面下|内々|NDA|秘密保持|外には出せない|まだ.{0,16}(?:公表|発表|伝えていな)/iu;
 const actual=/ただし|実際|現実|弊社|当社|自社|社内では|本番/u;
 const assertion=/(?:できますが|できるが|できます|ですが|ですけど|であり|なので|したため|されたため|しており|しています|していますが|してあります|決めて|決まって|打ち明け|聞きました|と言われ|と判明|受けています|まかなえ|払えない|滞って|という事情)/u;
-const requestEnding=/(?:教えて|考えて|作って|提案して|説明して|整理して|短くして|読みやすくして|一覧にして|まとめて|出して|示して)(?:ください|ほしい)(?:[。！？!?]|$)|(?:相談したい|知りたい)(?:です)?[。！？!?]?$|^(?:どう|どのように).{0,32}(?:すれば|したら|対応|返信|返事).{0,15}(?:よい|いい|ですか|ください|[？?])/u;
+const requestEnding=/(?:教えて|考えて|作って|提案して|説明して|整理して|調整して|確認して|返信して|短くして|読みやすくして|一覧にして|まとめて|出して|示して)(?:ください|ほしい)(?:[。！？!?]|$)|(?:相談したい|知りたい)(?:です)?[。！？!?]?$|^(?:どう|どのように).{0,32}(?:すれば|したら|対応|返信|返事).{0,15}(?:よい|いい|ですか|ください|[？?])/u;
 // Requests are exempt only when they contain no asserted private fact. This is not an allow-list of topic words.
 export function requestOnly(t){t=t.trim().replace(/[、,]$/u,'');return !/[、,]/u.test(t)&&requestEnding.test(t)&&!assertion.test(t)&&!PRIVATE_CUE.test(t)&&!/(?:は|が|の理由は).{0,45}(?:治療中|透析中|うつ病|逮捕|横領|自己破産|倒産|閉店する|撤退する|買収する|合併する)/u.test(t);}
 const requestTail=/(?:どう(?:対応|返信|返事|したら|すれば)|どのように(?:対応|返信|返事)|(?:対応方法|返信案|確認項目|改善策|修正の優先順位)を(?:教えて|考えて|提案して))/u;

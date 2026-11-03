@@ -1,0 +1,109 @@
+[
+  {
+    "id": "full-sensitive",
+    "text": "どう対応すればよいですか、顧客は今月から透析を受けています。",
+    "keywords": "",
+    "acknowledgementChecked": false,
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "detailsOpen": false,
+    "marks": [
+      {
+        "selected": false,
+        "source": null,
+        "text": "どう対応すればよいですか、"
+      },
+      {
+        "selected": true,
+        "source": "文脈ルール：機密内容の候補",
+        "text": "顧客は"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "selected": true,
+        "source": "ルール＋文脈ルール：日付・時期",
+        "text": "今月"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "selected": true,
+        "source": "文脈ルール：機密内容の候補",
+        "text": "から透析を受けています。"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": ""
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 機密情報も隠すモード：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "どう対応すればよいですか、[非公開情報1_4c8cd0999e3e]",
+    "warnings": []
+  },
+  {
+    "id": "full-symbols",
+    "text": "→（ ） ★、！ 返信文を考えてください。",
+    "keywords": "",
+    "acknowledgementChecked": false,
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "detailsOpen": false,
+    "marks": [
+      {
+        "selected": false,
+        "source": null,
+        "text": "→（ ） ★、！ 返信文を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 機密情報も隠すモード：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "→（ ） ★、！ 返信文を考えてください。",
+    "warnings": []
+  },
+  {
+    "id": "full-product",
+    "text": "商品名は月灯です。数量は500セットです。返信案を考えてください。",
+    "keywords": "",
+    "acknowledgementChecked": false,
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "detailsOpen": false,
+    "marks": [
+      {
+        "selected": false,
+        "source": null,
+        "text": "商品名は"
+      },
+      {
+        "selected": true,
+        "source": "値の抽出ルール：商品・製品型番",
+        "text": "月灯"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": "です。数量は"
+      },
+      {
+        "selected": true,
+        "source": "ルール：数量・取引条件",
+        "text": "500セット"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": "です。返信案を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 機密情報も隠すモード：端末内AI＋背景・事情のルール。見落とし・誤検出は残ります。",
+    "output": "商品名は[商品型番1_2a1930221cc2]です。数量は[取引条件1_2a1930221cc2]です。返信案を考えてください。",
+    "warnings": []
+  }
+]

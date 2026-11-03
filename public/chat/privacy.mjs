@@ -49,3 +49,6 @@ export function reviewedMessage(review,selected){
  const known=new Set(review.findings.map(f=>f.id));if([...selected].some(id=>!known.has(id)))throw Error('選択結果を確認し直してください。');
  let cursor=0,text='';for(const f of review.findings){if(!Number.isInteger(f.start)||!Number.isInteger(f.end)||f.start<cursor||f.end<=f.start||f.end>review.original.length||review.original.slice(f.start,f.end)!==f.text)throw Error('確認した文章が変わっています。');text+=review.original.slice(cursor,f.start)+(selected.has(f.id)?HIDDEN:f.text);cursor=f.end;}return text+review.original.slice(cursor);
 }
+
+// Formatting alone is not an automatically inferred identity. Explicit user selections still take precedence.
+export const formattingOnly=text=>!/[\p{L}\p{N}]/u.test(text);

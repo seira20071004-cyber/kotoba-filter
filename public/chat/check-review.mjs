@@ -1,6 +1,6 @@
-import {refineContextFindings,contextualRiskRules} from './context-policy.mjs?v=standardquality3';
-import {abstractionReview,partitionReview,TYPES} from './abstraction.mjs?v=standardquality3';
-import {mergeReview,contextRuleFindings,CATEGORY_REASONS} from './confidential.mjs?v=standardquality3';
+import {refineContextFindings,contextualRiskRules} from './context-policy.mjs?v=twomodes2';
+import {abstractionReview,partitionReview,TYPES} from './abstraction.mjs?v=twomodes2';
+import {mergeReview,contextRuleFindings,CATEGORY_REASONS} from './confidential.mjs?v=twomodes2';
 
 // Business figures, roles and contextual warnings are never selected as PII.
 export function personalReview(original,keywords=[]){
@@ -54,3 +54,7 @@ export function projectSelection(previous,selected,next,forced=[]){
  return new Set(next.findings.filter(covered).map(f=>f.id));
 }
 export function copyIsReady(complete,locked,contexts,decisions,review=null,selected=null){return !!complete&&!locked&&pendingContexts(contexts,decisions).length===0&&(!review||!selected||contexts.every(c=>decisions.get(contextKey(c))!=='hide'||contextState(review,selected,c)));}
+
+// Detected spans are protected by default; only unresolved content needs acknowledgement.
+export function beginReview(review,contexts){let selected=new Set(review.findings.filter(f=>TYPES[f.kind].rank===1).map(f=>f.id));const decisions=new Map();for(const c of contexts.filter(c=>!c.unresolved)){selected=selectContext(review,selected,c,true);decisions.set(contextKey(c),'hide');}return{selected,decisions};}
+export function acknowledgeUnresolved(contexts,decisions,acknowledged){const next=new Map(decisions);for(const c of contexts.filter(c=>c.unresolved)){if(acknowledged)next.set(contextKey(c),'keep');else next.delete(contextKey(c));}return next;}

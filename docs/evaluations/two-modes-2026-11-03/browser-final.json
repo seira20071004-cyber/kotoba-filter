@@ -1,0 +1,238 @@
+[
+  {
+    "id": "product-quantity",
+    "text": "商品名は月灯です。数量は500セットです。返信文を考えてください。",
+    "keywords": "",
+    "acknowledgementChecked": false,
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "detailsOpen": false,
+    "marks": [
+      {
+        "selected": false,
+        "source": null,
+        "text": "商品名は"
+      },
+      {
+        "selected": true,
+        "source": "値の抽出ルール：商品・製品型番",
+        "text": "月灯"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": "です。数量は"
+      },
+      {
+        "selected": true,
+        "source": "ルール：数量・取引条件",
+        "text": "500セット"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": "です。返信文を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 通常モード：端末内AI＋ルールで具体値を抽出。見落とし・誤検出は残ります。",
+    "output": "商品名は[商品型番1_08f7d9c655ee]です。数量は[取引条件1_08f7d9c655ee]です。返信文を考えてください。",
+    "warnings": []
+  },
+  {
+    "id": "kanji-quantity",
+    "text": "「月灯」を百二十個、来月に納品します。返信案を考えてください。",
+    "keywords": "",
+    "acknowledgementChecked": false,
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "detailsOpen": false,
+    "marks": [
+      {
+        "selected": false,
+        "source": null,
+        "text": "「"
+      },
+      {
+        "selected": true,
+        "source": "値の抽出ルール：商品・製品型番",
+        "text": "月灯"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": "」を"
+      },
+      {
+        "selected": true,
+        "source": "数量のルール：数量・取引条件",
+        "text": "百二十個"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": "、"
+      },
+      {
+        "selected": true,
+        "source": "ルール：日付・時期",
+        "text": "来月"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": "に納品します。返信案を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 通常モード：端末内AI＋ルールで具体値を抽出。見落とし・誤検出は残ります。",
+    "output": "「[商品型番1_26b43bd5142c]」を[取引条件1_26b43bd5142c]、[日付等1_26b43bd5142c]に納品します。返信案を考えてください。",
+    "warnings": []
+  },
+  {
+    "id": "quantity-threshold",
+    "text": "年間300台以上を納品します。確認メールを考えてください。",
+    "keywords": "",
+    "acknowledgementChecked": false,
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "detailsOpen": false,
+    "marks": [
+      {
+        "selected": false,
+        "source": null,
+        "text": "年間"
+      },
+      {
+        "selected": true,
+        "source": "ルール：数量・取引条件",
+        "text": "300台"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": "以上を納品します。確認メールを考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 通常モード：端末内AI＋ルールで具体値を抽出。見落とし・誤検出は残ります。",
+    "output": "年間[取引条件1_1a1fd4a17847]以上を納品します。確認メールを考えてください。",
+    "warnings": []
+  },
+  {
+    "id": "registered-product",
+    "text": "月灯を500セット出荷します。月灯の納期を調整してください。",
+    "keywords": "月灯",
+    "acknowledgementChecked": false,
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "detailsOpen": false,
+    "marks": [
+      {
+        "selected": false,
+        "source": null,
+        "text": ""
+      },
+      {
+        "selected": true,
+        "source": "機密キーワード：手動追加・登録した機密語",
+        "text": "月灯"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": "を"
+      },
+      {
+        "selected": true,
+        "source": "ルール：数量・取引条件",
+        "text": "500セット"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": "出荷します。"
+      },
+      {
+        "selected": true,
+        "source": "機密キーワード：手動追加・登録した機密語",
+        "text": "月灯"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": "の納期を調整してください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 通常モード：端末内AI＋ルールで具体値を抽出。見落とし・誤検出は残ります。",
+    "output": "[非表示1_ea4c2c15044d]を[取引条件1_ea4c2c15044d]出荷します。[非表示1_ea4c2c15044d]の納期を調整してください。",
+    "warnings": []
+  },
+  {
+    "id": "symbols",
+    "text": "→（ ） ★、！ 返信文を考えてください。",
+    "keywords": "",
+    "acknowledgementChecked": false,
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "detailsOpen": false,
+    "marks": [
+      {
+        "selected": false,
+        "source": null,
+        "text": "→（ ） ★、！ 返信文を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 通常モード：端末内AI＋ルールで具体値を抽出。見落とし・誤検出は残ります。",
+    "output": "→（ ） ★、！ 返信文を考えてください。",
+    "warnings": []
+  },
+  {
+    "id": "registered-symbol",
+    "text": "商品コードは★です。連絡文を考えてください。",
+    "keywords": "★",
+    "acknowledgementChecked": false,
+    "badge": "チェック完了",
+    "copyEnabled": true,
+    "detailsOpen": false,
+    "marks": [
+      {
+        "selected": false,
+        "source": null,
+        "text": "商品コードは"
+      },
+      {
+        "selected": true,
+        "source": "機密キーワード：手動追加・登録した機密語",
+        "text": "★"
+      },
+      {
+        "selected": false,
+        "source": null,
+        "text": "です。連絡文を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 通常モード：端末内AI＋ルールで具体値を抽出。見落とし・誤検出は残ります。",
+    "output": "商品コードは[非表示1_176d1d813dbe]です。連絡文を考えてください。",
+    "warnings": []
+  },
+  {
+    "id": "grouped-review",
+    "text": "顧客は透析を受けています。経理責任者が逮捕されました。返信案を考えてください。",
+    "keywords": "",
+    "acknowledgementChecked": false,
+    "badge": "チェック完了",
+    "copyEnabled": false,
+    "detailsOpen": false,
+    "marks": [
+      {
+        "selected": false,
+        "source": null,
+        "text": "顧客は透析を受けています。経理責任者が逮捕されました。返信案を考えてください。"
+      }
+    ],
+    "method": "個人情報：OpenAI Privacy Filter / GPU ／ 通常モード：端末内AI＋ルールで具体値を抽出。見落とし・誤検出は残ります。",
+    "output": "顧客は透析を受けています。経理責任者が逮捕されました。返信案を考えてください。",
+    "warnings": [
+      "自動では隠していない候補\n顧客は透析を受けています。\n隠す語句を手動で指定\n追加確認前\n理由を見る",
+      "自動では隠していない候補\n経理責任者が逮捕されました。\n隠す語句を手動で指定\n追加確認前\n理由を見る"
+    ]
+  }
+]
